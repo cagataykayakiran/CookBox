@@ -96,4 +96,7 @@ dependencies {
     // Extended Icons
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
 
+    implementation ("com.google.accompanist:accompanist-pager:0.21.3-beta")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.21.3-beta")
+
 }
