@@ -1,0 +1,66 @@
+package com.example.recipeapp.data.remote.response
+
+import com.example.recipeapp.domain.model.Recipe
+
+data class RecipeDto(
+    val vegetarian: Boolean?,
+    val vegan: Boolean?,
+    val glutenFree: Boolean?,
+    val dairyFree: Boolean?,
+    val veryHealthy: Boolean?,
+    val cheap: Boolean?,
+    val veryPopular: Boolean?,
+    val sustainable: Boolean?,
+    val lowFodmap: Boolean?,
+    val weightWatcherSmartPoints: Int?,
+    val gaps: String?,
+    val preparationMinutes: Int?,
+    val cookingMinutes: Int?,
+    val aggregateLikes: Int?,
+    val healthScore: Int?,
+    val creditsText: String?,
+    val sourceName: String?,
+    val pricePerServing: Double?,
+    val id: Int?,
+    val title: String?,
+    val readyInMinutes: Int?,
+    val servings: Int?,
+    val sourceUrl: String?,
+    val image: String?,
+    val imageType: String?,
+    val summary: String?,
+    val cuisines: List<String?>?,
+    val dishTypes: List<String?>?,
+    val diets: List<String>?,
+    val occasions: List<String?>?,
+    val analyzedInstructionDtos: List<AnalyzedInstructionDto>?,
+    val spoonacularScore: Double?,
+    val spoonacularSourceUrl: String?,
+    val license: String?
+)
+
+fun RecipeDto.toRecipe(): Recipe {
+    return Recipe(
+        id = this.id ?: 0,
+        title = this.title.orEmpty(),
+        vegetarian = this.vegetarian ?: false,
+        vegan = this.vegan ?: false,
+        glutenFree = this.glutenFree ?: false,
+        dairyFree = this.dairyFree ?: false,
+        veryHealthy = this.veryHealthy ?: false,
+        cheap = this.cheap ?: false,
+        veryPopular = this.veryPopular ?: false,
+        sustainable = this.sustainable ?: false,
+        weightWatcherSmartPoints = this.weightWatcherSmartPoints ?: 0,
+        aggregateLikes = this.aggregateLikes ?: 0,
+        healthScore = this.healthScore ?: 0,
+        pricePerServing = this.pricePerServing ?: 0.0,
+        readyInMinutes = this.readyInMinutes ?: 0,
+        servings = this.servings ?: 0,
+        sourceUrl = this.sourceUrl.orEmpty(),
+        image = this.image.orEmpty(),
+        summary = this.summary.orEmpty(),
+        diets = this.diets ?: emptyList(),
+        analyzedInstructionDtos = this.analyzedInstructionDtos ?: emptyList(),
+    )
+}

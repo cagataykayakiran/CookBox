@@ -7,10 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.recipeapp.presentation.components.AppBottomBar
+import com.example.recipeapp.presentation.components.AppTopBar
+import com.example.recipeapp.presentation.get_recipes.MainScreen
+import com.example.recipeapp.presentation.get_recipes.RecipeViewModel
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.PaparaFinalCaseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,29 +26,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PaparaFinalCaseTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val viewModel: RecipeViewModel = hiltViewModel()
+                val state by viewModel.recipesState.collectAsState()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor = BackgroundPrimary ,
+                    topBar = { AppTopBar() },
+                    bottomBar = { AppBottomBar() }
+                ) { innerPadding ->
+                    MainScreen(modifier = Modifier.padding(innerPadding), state)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PaparaFinalCaseTheme {
-        Greeting("Android")
     }
 }
