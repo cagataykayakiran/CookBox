@@ -5,7 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
 
-    suspend fun getRecipes(diet: String): List<Recipe>
+    suspend fun getRecipes(): List<Recipe>
+    suspend fun getTypeByRecipes(diet: String): List<Recipe>
     //suspend fun upsertRecipes(recipes: List<RecipeEntity>)
     //fun getLocalDatabaseRecipe(): Flow<List<RecipeEntity>>
 }

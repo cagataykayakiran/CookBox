@@ -12,7 +12,11 @@ class RecipeRepositoryImpl @Inject constructor(
     private val recipeApi: RecipeApi,
 ) : RecipeRepository {
 
-    override suspend fun getRecipes(diet: String): List<Recipe> {
-        return recipeApi.getRecipeList(diet).toRecipeList()
+    override suspend fun getRecipes(): List<Recipe> {
+        return recipeApi.getBreakfastRecipeList().toRecipeList()
+    }
+
+    override suspend fun getTypeByRecipes(diet: String): List<Recipe> {
+        return recipeApi.getDietTypeRecipeList(diet).toRecipeList()
     }
 }

@@ -10,14 +10,14 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetRecipes @Inject constructor(
+class GetTypeByRecipes@Inject constructor(
     private val repository: RecipeRepository,
     private val networkHelper: NetworkHelper
 ) {
-    operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
+    operator fun invoke(diet: String): Flow<Resource<List<Recipe>>> = flow {
         try {
-            emit(Resource.Loading(isLoading = true))
-            val recipes = repository.getRecipes()
+            emit(Resource.Loading())
+            val recipes = repository.getTypeByRecipes(diet)
             emit(Resource.Success(recipes))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage))
