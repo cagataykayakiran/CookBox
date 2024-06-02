@@ -36,7 +36,7 @@ fun AppSearchBar(modifier: Modifier = Modifier) {
 
     Row(
         modifier = modifier
-            .fillMaxWidth().padding(top = 5.dp),
+            .fillMaxWidth().padding(top = 15.dp),
         horizontalArrangement = Arrangement.Absolute.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
