@@ -2,13 +2,20 @@ package com.example.recipeapp.data.remote
 
 import com.example.recipeapp.data.remote.response.RecipeListDto
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RecipeApi {
 
     @GET("recipes/complexSearch")
-    suspend fun getRecipeList(
+    suspend fun getBreakfastRecipeList(
+        @Query("type") type: String = "Breakfast",
+        @Query("addRecipeInformation") addRecipeInformation: Boolean = true,
+        @Query("addRecipeInstructions") addRecipeInstructions: Boolean = true,
+        @Query("apiKey") apiKey: String = API_KEY,
+    ): RecipeListDto
+
+    @GET("recipes/complexSearch")
+    suspend fun getDietTypeRecipeList(
         @Query("diet") diet: String,
         @Query("addRecipeInformation") addRecipeInformation: Boolean = true,
         @Query("addRecipeInstructions") addRecipeInstructions: Boolean = true,
