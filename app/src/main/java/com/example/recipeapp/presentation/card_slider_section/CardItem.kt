@@ -24,13 +24,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.presentation.ui.theme.ButtonColorPrimary
 import com.example.recipeapp.presentation.ui.theme.ButtonColorSecondary
 
 @Composable
-fun CardItem(recipe: Recipe) {
+fun CardItem(navController: NavController, recipe: Recipe) {
     Card(
         modifier = Modifier
             .size(370.dp, 150.dp)
