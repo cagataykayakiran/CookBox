@@ -99,4 +99,6 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-pager:0.21.3-beta")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.21.3-beta")
 
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 }
