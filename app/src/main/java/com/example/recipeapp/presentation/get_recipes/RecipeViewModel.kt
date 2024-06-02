@@ -3,6 +3,7 @@ package com.example.recipeapp.presentation.get_recipes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.util.Resource
+import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.use_cases.GetRecipes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,21 +21,21 @@ class RecipeViewModel @Inject constructor(
     val recipesState = _recipesState.asStateFlow()
 
     init {
-        getRecipeList(diet = "Vegetarian")
+        getRecipeList()
         println(recipesState.value.recipe.toString())
 
     }
-    private fun getRecipeList(diet: String) {
-        getRecipes(diet).onEach { result ->
+    private fun getRecipeList() {
+        getRecipes().onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _recipesState.value = RecipeState(recipe = result.data ?: emptyList())
+                    _recipesState.value = _recipesState.value.copy(recipe = result.data ?: emptyList())
                 }
                 is Resource.Loading -> {
-                    _recipesState.value = RecipeState(isLoading = true)
+                    _recipesState.value = _recipesState.value.copy(isLoading = true)
                 }
                 is Resource.Error -> {
-                    _recipesState.value = RecipeState(error = result.message ?: "Error")
+                    _recipesState.value = _recipesState.value.copy(error = result.message ?: "Error!")
                 }
 
                 else -> {}
