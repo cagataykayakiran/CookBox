@@ -6,18 +6,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -61,45 +64,47 @@ fun CategoryList(categories: List<String>, images: List<Int>) {
 
 @Composable
 fun CategoryItemList(modifier: Modifier = Modifier, state: RecipeState) {
-    LazyHorizontalGrid(
-        rows = GridCells.Fixed(2),
-        modifier = modifier.wrapContentSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        items(state.recipe) { recipe ->
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .size(75.dp, 110.dp)
-                    .background(Color.White)
-                    .clickable { },
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    horizontalAlignment = Alignment.CenterHorizontally,
+    Box(modifier = modifier.size(300.dp, 300.dp)) {
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = modifier.fillMaxSize(),
+        ) {
+            items(state.recipe) { recipe ->
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .size(75.dp, 110.dp)
+                        .background(Color.White)
+                        .clickable { },
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(Color.White)
-                            .size(60.dp),
-                        contentAlignment = Alignment.Center
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        AsyncImage(
-                            model = state.recipe.map { },
-                            contentDescription = null,
-                            modifier = Modifier.size(50.dp)
+                        Box(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(Color.White)
+                                .size(60.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            AsyncImage(
+                                model = state.recipe.map { },
+                                contentDescription = null,
+                                modifier = Modifier.size(50.dp)
+                            )
+                        }
+                        Text(
+                            text = recipe.title,
+                            color = Color.Black,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
-                    Text(
-                        text = recipe.title,
-                        color = Color.Black,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
                 }
             }
         }
