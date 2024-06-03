@@ -19,6 +19,7 @@ class GetRecipes @Inject constructor(
             emit(Resource.Loading(isLoading = true))
             val recipes = repository.getRecipes()
             emit(Resource.Success(recipes))
+            emit(Resource.Loading(isLoading = false))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage))
         } catch (e: IOException) {
