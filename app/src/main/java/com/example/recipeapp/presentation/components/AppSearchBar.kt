@@ -1,79 +1,66 @@
 package com.example.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.recipeapp.presentation.ui.theme.ButtonColorPrimary
+import com.example.recipeapp.util.Screen
 
 @Composable
-fun AppSearchBar(modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf("") }
-    val hint by remember { mutableStateOf("Recipe Search...") }
-
+fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .fillMaxWidth().padding(top = 15.dp),
+            .fillMaxWidth()
+            .padding(top = 15.dp),
         horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TextField(
-            modifier = modifier,
-            value = text,
-            onValueChange = { text = it },
-            leadingIcon = {
+        Box(
+            modifier = modifier
+                .size(300.dp, 50.dp)
+                .height(56.dp)
+                .border(1.dp, ButtonColorPrimary, shape = RoundedCornerShape(8.dp))
+                .background(Color.White, shape = RoundedCornerShape(8.dp))
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clickable { navController.navigate(Screen.SearchScreen.route) },
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Icon(
-                    imageVector = Icons.Rounded.Search,
-                    contentDescription = "search"
+                    Icons.Default.Search,
+                    contentDescription = null,
+                    tint = Color.Black,
                 )
-            },
-            placeholder = {
-                Text(text = hint)
-            },
-            trailingIcon = {
-                if (text.isNotEmpty()) {
-                    Icon(
-                        modifier = Modifier.clickable {
-                            text = ""
-                        },
-                        imageVector = Icons.Rounded.Close,
-                        contentDescription = "close"
-                    )
-                }
-            },
-            singleLine = true,
-            shape = RoundedCornerShape(25.dp),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            )
-
-        )
+                Spacer(modifier = Modifier.width(8.dp)) // İkon ile metin arasındaki boşluk
+                Text(text = "Search Recipes...")
+            }
+        }
         Box(
             modifier = Modifier
                 .size(35.dp)
@@ -81,7 +68,9 @@ fun AppSearchBar(modifier: Modifier = Modifier) {
                 .background(ButtonColorPrimary),
             contentAlignment = Alignment.Center
         ) {
-            Icon(imageVector = Icons.Rounded.Add, contentDescription = null, tint = Color.White)
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Default.FilterAlt, contentDescription = null, tint = Color.White)
+            }
         }
     }
 }
