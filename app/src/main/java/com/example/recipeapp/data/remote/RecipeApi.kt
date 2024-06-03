@@ -22,8 +22,17 @@ interface RecipeApi {
         @Query("apiKey") apiKey: String = API_KEY,
     ): RecipeListDto
 
+    @GET("recipes/complexSearch")
+    suspend fun getRecipeByName(
+        @Query("query") query: String,
+        @Query("addRecipeInformation") addRecipeInformation: Boolean = true,
+        @Query("addRecipeInstructions") addRecipeInstructions: Boolean = true,
+        @Query("apiKey") apiKey: String = API_KEY,
+        @Query("number") number: Int = 50,
+    ): RecipeListDto
+
     companion object {
         const val BASE_URL = "https://api.spoonacular.com/"
-        const val API_KEY = "d106ce56348142098059f8bc48332177"
+        const val API_KEY = "fc1bcf5797f64422b168a334bfc47d1f"
     }
 }
