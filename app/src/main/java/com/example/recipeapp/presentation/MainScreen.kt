@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,6 +27,7 @@ import com.example.recipeapp.presentation.components.AppTopBar
 import com.example.recipeapp.presentation.get_category_recipes.CategoryItemList
 import com.example.recipeapp.presentation.get_category_recipes.CategoryList
 import com.example.recipeapp.presentation.get_recipes.RecipeViewModel
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 
@@ -43,7 +43,7 @@ fun MainScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = { AppTopBar() },
         bottomBar = { AppBottomBar() },
-        containerColor = Color.Black
+        containerColor = BackgroundPrimary
     ) { innerPadding ->
         LazyColumn(
             modifier = modifier
@@ -53,7 +53,7 @@ fun MainScreen(
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
             item {
-                AppSearchBar()
+                AppSearchBar(navController = navController)
                 Spacer(modifier = Modifier.height(18.dp))
                 Text(
                     modifier = Modifier
@@ -65,7 +65,10 @@ fun MainScreen(
                     fontSize = 20.sp,
                     fontFamily = futuraSansFamily
                 )
-                CardSliderSection(navController = navController, cardItems = state.recipe)
+                CardSliderSection(
+                    navController = navController,
+                    cardItems = state.recipe,
+                )
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
