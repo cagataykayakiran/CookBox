@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipeapp.domain.model.Recipe
+import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -57,7 +58,7 @@ fun CardSliderSection(
             }
             HorizontalPagerIndicator(
                 pagerState = pagerState,
-                activeColor = Color.Gray,
+                activeColor = MainColorPrimary,
                 inactiveColor = Color.LightGray,
                 indicatorShape = CircleShape,
                 indicatorWidth = 8.dp,
