@@ -16,14 +16,13 @@ class GetRecipes @Inject constructor(
 ) {
     operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
         try {
-            emit(Resource.Loading(isLoading = true))
+            emit(Resource.Loading())
             val recipes = repository.getRecipes()
             emit(Resource.Success(recipes))
-            emit(Resource.Loading(isLoading = false))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage))
+            emit(Resource.Error(e.localizedMessage ?: "Error"))
         } catch (e: IOException) {
-            emit(Resource.Error(e.localizedMessage))
+            emit(Resource.Error(e.localizedMessage ?: "Error"))
         }
     }
 }
