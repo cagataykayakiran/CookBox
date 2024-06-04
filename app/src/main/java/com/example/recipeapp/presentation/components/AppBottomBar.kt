@@ -19,8 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.recipeapp.presentation.ui.theme.ButtonColorPrimary
-import com.example.recipeapp.presentation.ui.theme.ButtonColorSecondary
+import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
+import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 
@@ -70,10 +70,10 @@ fun AppBottomBar() {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = ButtonColorPrimary,
+                    selectedIconColor = MainColorPrimary,
                     unselectedIconColor = Color.Gray,
                     unselectedTextColor = Color.Gray,
-                    indicatorColor = ButtonColorSecondary
+                    indicatorColor = MainColorSecondary
                 )
             )
         }
