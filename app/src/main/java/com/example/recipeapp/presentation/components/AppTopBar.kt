@@ -6,9 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.recipeapp.presentation.ui.theme.ButtonColorPrimary
-import com.example.recipeapp.presentation.ui.theme.ButtonColorSecondary
-import com.example.recipeapp.presentation.ui.theme.CardColor
+import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,7 +17,7 @@ fun AppTopBar(modifier: Modifier = Modifier) {
             Text(text = "Recipe App")
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = ButtonColorPrimary
+            containerColor = Color.White
         )
     )
 }
