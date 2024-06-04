@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.util.Resource
 import com.example.recipeapp.domain.use_cases.GetTypeByRecipes
-import com.example.recipeapp.presentation.get_recipes.RecipeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,22 +17,41 @@ class RecipeTypeViewModel @Inject constructor(
     private val getTypeByRecipes: GetTypeByRecipes
 ): ViewModel() {
 
-    private val _typeByRecipeState = MutableStateFlow(RecipeState())
+    private val _typeByRecipeState = MutableStateFlow(RecipeTypeState())
     val typeByRecipeState = _typeByRecipeState.asStateFlow()
+
+    init {
+        println(typeByRecipeState.value.recipe.size)
+    }
 
     private fun getType(diet: String) {
         getTypeByRecipes(diet).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _typeByRecipeState.value = RecipeState(recipe = result.data ?: emptyList())
+                    _typeByRecipeState.update {
+                        it.copy(
+                            recipe = result.data ?: emptyList(),
+                        )
+                    }
                 }
                 is Resource.Loading -> {
-                    _typeByRecipeState.value = RecipeState(isLoading = true)
+                    _typeByRecipeState.update {
+                        it.copy(
+                            isLoading = true
+                        )
+                    }
                 }
                 is Resource.Error -> {
-                    _typeByRecipeState.value = RecipeState(error = result.message ?: "Error")
+                    _typeByRecipeState.update {
+                        it.copy(
+                            error = result.message ?: "Error",
+                        )
+                    }
                 }
-                else -> {}
+
+                else -> {
+                    println("Error")
+                }
             }
         }.launchIn(viewModelScope)
     }
