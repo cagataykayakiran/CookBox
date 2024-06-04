@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.search_screen.presentation
+package com.example.recipeapp.presentation.search_screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.recipeapp.presentation.search_screen.presentation.component.SearchItem
+import com.example.recipeapp.presentation.search_screen.component.SearchItem
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 
 @OptIn(ExperimentalMaterial3Api::class)

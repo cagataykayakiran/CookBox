@@ -1,9 +1,9 @@
-package com.example.recipeapp.presentation.search_screen.presentation
+package com.example.recipeapp.presentation.search_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.util.Resource
-import com.example.recipeapp.presentation.search_screen.domain.use_cases.SearchUseCase
+import com.example.recipeapp.domain.use_cases.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

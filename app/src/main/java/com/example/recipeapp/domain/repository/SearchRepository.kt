@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.search_screen.domain.repository
+package com.example.recipeapp.domain.repository
 
 import com.example.recipeapp.domain.model.Recipe
 

@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.search_screen.presentation.component
+package com.example.recipeapp.presentation.search_screen.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.search_screen.presentation.SearchUiEvents
+import com.example.recipeapp.presentation.search_screen.SearchUiEvents
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 @Composable
