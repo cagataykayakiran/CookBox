@@ -1,9 +1,9 @@
-package com.example.recipeapp.presentation.search_screen.data
+package com.example.recipeapp.data.repository
 
 import com.example.recipeapp.data.remote.RecipeApi
 import com.example.recipeapp.data.remote.response.toRecipeList
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.search_screen.domain.repository.SearchRepository
+import com.example.recipeapp.domain.repository.SearchRepository
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(

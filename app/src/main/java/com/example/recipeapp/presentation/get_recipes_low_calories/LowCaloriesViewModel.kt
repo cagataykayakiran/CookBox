@@ -1,9 +1,12 @@
-package com.example.recipeapp.presentation.get_category_recipes
+package com.example.recipeapp.presentation.get_recipes_low_calories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.util.Resource
+import com.example.recipeapp.domain.use_cases.GetRecipesByLowCalories
 import com.example.recipeapp.domain.use_cases.GetTypeByRecipes
+import com.example.recipeapp.presentation.get_category_recipes.RecipeTypeState
+import com.example.recipeapp.presentation.get_category_recipes.UIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,36 +16,35 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeTypeViewModel @Inject constructor(
-    private val getTypeByRecipes: GetTypeByRecipes
+class LowCaloriesViewModel @Inject constructor(
+    private val getRecipesByLowCalories: GetRecipesByLowCalories
 ): ViewModel() {
 
-    private val _typeByRecipeState = MutableStateFlow(RecipeTypeState())
-    val typeByRecipeState = _typeByRecipeState.asStateFlow()
+    private val _lowCaloriesState = MutableStateFlow(LowCaloriesState())
+    val lowCaloriesState = _lowCaloriesState.asStateFlow()
 
     init {
-        println(typeByRecipeState.value.recipe.size)
+        getLowCalories()
     }
-
-    private fun getType(diet: String) {
-        getTypeByRecipes(diet).onEach { result ->
+    private fun getLowCalories() {
+        getRecipesByLowCalories().onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _typeByRecipeState.update {
+                    _lowCaloriesState.update {
                         it.copy(
                             recipe = result.data ?: emptyList(),
                         )
                     }
                 }
                 is Resource.Loading -> {
-                    _typeByRecipeState.update {
+                    _lowCaloriesState.update {
                         it.copy(
                             isLoading = true
                         )
                     }
                 }
                 is Resource.Error -> {
-                    _typeByRecipeState.update {
+                    _lowCaloriesState.update {
                         it.copy(
                             error = result.message ?: "Error",
                         )
@@ -56,9 +58,4 @@ class RecipeTypeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun onEvent(event: UIEvent) {
-        when(event) {
-            is UIEvent.SelectCategory -> getType(event.category)
-        }
-    }
 }

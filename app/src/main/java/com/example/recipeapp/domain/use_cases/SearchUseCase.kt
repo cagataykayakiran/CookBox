@@ -1,8 +1,8 @@
-package com.example.recipeapp.presentation.search_screen.domain.use_cases
+package com.example.recipeapp.domain.use_cases
 
 import com.example.myapplication.util.Resource
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.search_screen.data.SearchRepositoryImpl
+import com.example.recipeapp.data.repository.SearchRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

@@ -26,7 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.recipeapp.presentation.ui.theme.ButtonColorPrimary
+import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.example.recipeapp.util.Screen
 
 @Composable
@@ -42,7 +42,7 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
             modifier = modifier
                 .size(300.dp, 50.dp)
                 .height(56.dp)
-                .border(1.dp, ButtonColorPrimary, shape = RoundedCornerShape(8.dp))
+                .border(1.dp, MainColorPrimary, shape = RoundedCornerShape(8.dp))
                 .background(Color.White, shape = RoundedCornerShape(8.dp))
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .clickable { navController.navigate(Screen.SearchScreen.route) },
@@ -57,7 +57,7 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
                     contentDescription = null,
                     tint = Color.Black,
                 )
-                Spacer(modifier = Modifier.width(8.dp)) // İkon ile metin arasındaki boşluk
+                Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Search Recipes...")
             }
         }
@@ -65,7 +65,7 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .size(35.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(ButtonColorPrimary),
+                .background(MainColorPrimary),
             contentAlignment = Alignment.Center
         ) {
             IconButton(onClick = { /*TODO*/ }) {

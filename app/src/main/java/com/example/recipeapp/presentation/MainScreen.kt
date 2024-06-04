@@ -13,21 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.recipeapp.R
 import com.example.recipeapp.presentation.card_slider_section.CardSliderSection
 import com.example.recipeapp.presentation.components.AppBottomBar
 import com.example.recipeapp.presentation.components.AppSearchBar
 import com.example.recipeapp.presentation.components.AppTopBar
-import com.example.recipeapp.presentation.get_category_recipes.CategoryItemList
-import com.example.recipeapp.presentation.get_category_recipes.CategoryList
+import com.example.recipeapp.presentation.get_category_recipes.CategorySection
+import com.example.recipeapp.presentation.get_category_recipes.RecipeTypeViewModel
 import com.example.recipeapp.presentation.get_recipes.RecipeViewModel
-import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
+import com.example.recipeapp.presentation.get_recipes_low_calories.LowCategorySection
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 
@@ -35,26 +35,27 @@ import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 fun MainScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: RecipeViewModel = hiltViewModel()
+    viewModel: RecipeViewModel = hiltViewModel(),
+    typeViewModel: RecipeTypeViewModel = hiltViewModel()
 ) {
-    val state by viewModel.recipesState.collectAsState()
+    val mainState by viewModel.recipesState.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { AppTopBar() },
         bottomBar = { AppBottomBar() },
-        containerColor = BackgroundPrimary
+        containerColor = Color.White
     ) { innerPadding ->
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 20.dp, vertical = 17.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
                 AppSearchBar(navController = navController)
-                Spacer(modifier = Modifier.height(18.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -67,8 +68,9 @@ fun MainScreen(
                 )
                 CardSliderSection(
                     navController = navController,
-                    cardItems = state.recipe,
+                    cardItems = mainState.recipe,
                 )
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -79,16 +81,21 @@ fun MainScreen(
                     fontSize = 20.sp,
                     fontFamily = futuraSansFamily
                 )
-                Spacer(modifier = Modifier.height(18.dp))
-                val categories = listOf("Gluten Free", "Ketogenic", "Vegetarian", "Vegan")
-                val images = listOf(
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background
+                Spacer(modifier = Modifier.height(10.dp))
+                CategorySection(typeViewModel = typeViewModel, navController = navController)
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp, start = 7.dp),
+                    text = "Low Calories ",
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp,
+                    fontFamily = futuraSansFamily
                 )
-                CategoryList(categories = categories, images = images)
-                CategoryItemList(state = state)
+                Spacer(modifier = Modifier.height(10.dp))
+                LowCategorySection()
             }
         }
     }

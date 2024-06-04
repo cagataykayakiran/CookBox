@@ -7,6 +7,8 @@ interface RecipeRepository {
 
     suspend fun getRecipes(): List<Recipe>
     suspend fun getTypeByRecipes(diet: String): List<Recipe>
+
+    suspend fun getRecipesByLowCalories(): List<Recipe>
     //suspend fun upsertRecipes(recipes: List<RecipeEntity>)
     //fun getLocalDatabaseRecipe(): Flow<List<RecipeEntity>>
 }

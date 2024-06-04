@@ -16,14 +16,13 @@ class GetTypeByRecipes@Inject constructor(
 ) {
     operator fun invoke(diet: String): Flow<Resource<List<Recipe>>> = flow {
         try {
-            emit(Resource.Loading(isLoading = true))
+            emit(Resource.Loading())
             val recipes = repository.getTypeByRecipes(diet)
             emit(Resource.Success(recipes))
-            emit(Resource.Loading(isLoading = false))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage))
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error"))
         } catch (e: IOException) {
-            emit(Resource.Error(e.localizedMessage))
+            emit(Resource.Error(e.localizedMessage?: "An unexpected error"))
         }
     }
 }

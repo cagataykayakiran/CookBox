@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.ui.theme.ButtonColorPrimary
-import com.example.recipeapp.presentation.ui.theme.ButtonColorSecondary
+import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
+import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 
 @Composable
 fun CardItem(navController: NavController, recipe: Recipe) {
@@ -37,7 +37,7 @@ fun CardItem(navController: NavController, recipe: Recipe) {
             .size(370.dp, 150.dp)
             .fillMaxHeight()
             .clickable { },
-        colors = CardDefaults.cardColors(containerColor = ButtonColorSecondary),
+        colors = CardDefaults.cardColors(containerColor = MainColorSecondary),
         shape = RoundedCornerShape(25.dp)
     ) {
         Row(
@@ -63,7 +63,7 @@ fun CardItem(navController: NavController, recipe: Recipe) {
                     text = recipe.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
-                    color = ButtonColorPrimary,
+                    color = MainColorPrimary,
                     maxLines = 1
                 )
                 Text(

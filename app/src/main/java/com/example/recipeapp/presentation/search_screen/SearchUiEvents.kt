@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.search_screen.presentation
+package com.example.recipeapp.presentation.search_screen
 
 import com.example.recipeapp.domain.model.Recipe
 

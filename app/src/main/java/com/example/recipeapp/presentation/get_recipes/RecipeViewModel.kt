@@ -3,7 +3,6 @@ package com.example.recipeapp.presentation.get_recipes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.util.Resource
-import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.use_cases.GetRecipes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
