@@ -23,4 +23,12 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getRecipesByLowCalories(): List<Recipe> {
         return recipeApi.getRecipesByLowCalories().toRecipeList()
     }
+
+    override suspend fun getRecipesByLowReadyTime(): List<Recipe> {
+        return recipeApi.getRecipesByLowReadyTime().toRecipeList()
+    }
+
+    override suspend fun getRecipesByHighProtein(): List<Recipe> {
+        return recipeApi.getRecipesByHighProtein().toRecipeList()
+    }
 }
