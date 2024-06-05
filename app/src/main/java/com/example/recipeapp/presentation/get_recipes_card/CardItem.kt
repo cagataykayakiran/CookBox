@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.card_slider_section
+package com.example.recipeapp.presentation.get_recipes_card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
