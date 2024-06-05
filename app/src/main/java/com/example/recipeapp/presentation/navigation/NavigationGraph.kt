@@ -7,13 +7,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recipeapp.presentation.MainScreen
-import com.example.recipeapp.presentation.get_category_recipes.RecipeListScreenByCategoryScreen
+import com.example.recipeapp.presentation.favorite_screen.FavoriteScreen
+import com.example.recipeapp.presentation.get_category_recipes.RecipeScreenByCategory
 import com.example.recipeapp.presentation.get_category_recipes.RecipeTypeViewModel
+import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailScreen
 import com.example.recipeapp.presentation.search_screen.SearchScreen
 import com.example.recipeapp.util.Screen
 
 @Composable
-fun NavigationGraph(modifier: Modifier = Modifier, viewModel: RecipeTypeViewModel = hiltViewModel()) {
+fun NavigationGraph(
+    modifier: Modifier = Modifier,
+    viewModel: RecipeTypeViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
     NavHost(
         modifier = modifier,
@@ -24,16 +29,21 @@ fun NavigationGraph(modifier: Modifier = Modifier, viewModel: RecipeTypeViewMode
             MainScreen(navController = navController)
         }
         composable(route = Screen.FavoriteScreen.route) {
+            FavoriteScreen(navController = navController)
         }
         composable(route = Screen.RecipeDetail.route) {
-
+            RecipeDetailScreen()
         }
         composable(route = Screen.SearchScreen.route) {
             SearchScreen()
         }
         composable(route = Screen.RecipeListScreenByCategory.route + "/{category}") {
             val category = it.arguments?.getString("category") ?: ""
-            RecipeListScreenByCategoryScreen(category = category, viewModel = viewModel, navController = navController)
+            RecipeScreenByCategory(
+                category = category,
+                viewModel = viewModel,
+                navController = navController
+            )
         }
     }
 }
