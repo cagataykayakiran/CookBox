@@ -1,7 +1,7 @@
 package com.example.recipeapp.domain.use_cases
 
-import com.example.myapplication.util.NetworkHelper
-import com.example.myapplication.util.Resource
+import com.example.recipeapp.util.NetworkHelper
+import com.example.recipeapp.util.Resource
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow

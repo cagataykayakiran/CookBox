@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.card_slider_section
+package com.example.recipeapp.presentation.get_recipes_card
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,12 +8,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -27,16 +28,18 @@ import kotlinx.coroutines.yield
 fun CardSliderSection(
     navController: NavController,
     modifier: Modifier = Modifier,
-    cardItems: List<Recipe>,
+    recipeCardViewModel: RecipeCardViewModel,
 ) {
     val pagerState = rememberPagerState()
-    if (cardItems.isNotEmpty()) {
-        LaunchedEffect(Unit) {
+    val cardItemState by recipeCardViewModel.recipesState.collectAsState()
+
+    if (cardItemState.data.isNotEmpty()) {
+        LaunchedEffect(true) {
             while (true) {
-                yield() // Allow other compositions to run
-                delay(3000) // Delay for 3 seconds
+                yield()
+                delay(3000)
                 pagerState.animateScrollToPage(
-                    page = (pagerState.currentPage + 1) % cardItems.size
+                    page = (pagerState.currentPage + 1) % cardItemState.data.size
                 )
             }
         }
@@ -46,15 +49,15 @@ fun CardSliderSection(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        if (cardItems.isNotEmpty()) {
+        if (cardItemState.data.isNotEmpty()) {
             HorizontalPager(
-                count = cardItems.size,
+                count = cardItemState.data.size,
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
             ) { page ->
-                CardItem(navController = navController, cardItems[page])
+                CardItem(navController = navController, cardItemState.data[page])
             }
             HorizontalPagerIndicator(
                 pagerState = pagerState,

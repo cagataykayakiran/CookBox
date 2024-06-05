@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_category_recipes.components
+package com.example.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,7 @@ import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 @Composable
-fun CategoryItemList(modifier: Modifier = Modifier, recipe: Recipe) {
+fun CategoryListItem(modifier: Modifier = Modifier, recipe: Recipe) {
     Box(
         modifier = modifier
             .padding(10.dp)
@@ -41,7 +41,7 @@ fun CategoryItemList(modifier: Modifier = Modifier, recipe: Recipe) {
             .background(MainColorSecondary)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(8.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -115,4 +115,3 @@ fun CategoryItemList(modifier: Modifier = Modifier, recipe: Recipe) {
         }
     }
 }
-

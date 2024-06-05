@@ -1,11 +1,9 @@
-package com.example.recipeapp.presentation.get_recipes_low_calories
+package com.example.recipeapp.presentation.get_recipes_low_ready_time
 
-import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.util.Resource
-import com.example.recipeapp.domain.use_cases.GetRecipesByLowCalories
+import com.example.recipeapp.domain.use_cases.GetRecipesByLowReadyTime
 import com.example.recipeapp.presentation.MainState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,32 +13,32 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class LowCaloriesViewModel @Inject constructor(
-    private val getRecipesByLowCalories: GetRecipesByLowCalories,
+class LowReadyTimeViewModel @Inject constructor(
+    private val getRecipesByLowReadyTime: GetRecipesByLowReadyTime
 ): ViewModel() {
 
-    private val _lowCaloriesState = MutableStateFlow(MainState.LowCaloriesState())
-    val lowCaloriesState = _lowCaloriesState.asStateFlow()
+    private val _lowReadyTimeState = MutableStateFlow(MainState.MaxReadyTimeState())
+    val lowReadyTimeState = _lowReadyTimeState.asStateFlow()
 
     init {
-        getLowCalories()
+        getMaxReadyTime()
     }
 
-    private fun getLowCalories() {
-        getRecipesByLowCalories().onEach { result ->
+    private fun getMaxReadyTime() {
+        getRecipesByLowReadyTime().onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _lowCaloriesState.value = _lowCaloriesState.value.copy(
+                    _lowReadyTimeState.value = _lowReadyTimeState.value.copy(
                         data = result.data ?: emptyList()
                     )
                 }
                 is Resource.Loading -> {
-                    _lowCaloriesState.value = _lowCaloriesState.value.copy(
+                    _lowReadyTimeState.value = _lowReadyTimeState.value.copy(
                         isLoading = true
                     )
                 }
                 is Resource.Error -> {
-                    _lowCaloriesState.value = _lowCaloriesState.value.copy(
+                    _lowReadyTimeState.value = _lowReadyTimeState.value.copy(
                         error = result.message ?: "Error!"
                     )
                 }

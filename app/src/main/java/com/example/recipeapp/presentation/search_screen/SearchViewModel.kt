@@ -2,8 +2,9 @@ package com.example.recipeapp.presentation.search_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.util.Resource
+import com.example.recipeapp.util.Resource
 import com.example.recipeapp.domain.use_cases.SearchUseCase
+import com.example.recipeapp.presentation.MainState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase
 ): ViewModel() {
-    private val _searchScreenState = MutableStateFlow(SearchScreenState())
+    private val _searchScreenState = MutableStateFlow(MainState.SearchState())
     val searchScreenState = _searchScreenState.asStateFlow()
     fun onEvent(event: SearchUiEvents) {
         when (event) {
@@ -31,7 +32,7 @@ class SearchViewModel @Inject constructor(
                 is Resource.Success -> {
                     _searchScreenState.value =
                         _searchScreenState.value.copy(
-                            searchList = result.data ?: emptyList(),
+                            data = result.data ?: emptyList(),
                             isLoading = false
                         )
                 }
@@ -54,7 +55,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun resetState() {
-        _searchScreenState.value = SearchScreenState()
+        _searchScreenState.value = MainState.SearchState()
     }
 
 }

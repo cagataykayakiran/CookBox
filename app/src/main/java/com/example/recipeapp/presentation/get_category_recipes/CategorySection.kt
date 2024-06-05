@@ -3,8 +3,6 @@ package com.example.recipeapp.presentation.get_category_recipes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -16,9 +14,7 @@ fun CategorySection(
     typeViewModel: RecipeTypeViewModel,
     navController: NavController,
 ) {
-    val typeState by typeViewModel.typeByRecipeState.collectAsState()
 
-    println("CategorySection" + typeState.recipe.size)
     val categories = listOf("Gluten Free", "Ketogenic", "Pescetarian", "Vegan", "Vegetarian")
     val images = listOf(
         R.drawable.glutenfree,

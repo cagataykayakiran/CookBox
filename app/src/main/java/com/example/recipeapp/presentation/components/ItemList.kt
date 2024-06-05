@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_recipes_low_calories.components
+package com.example.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +24,7 @@ import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 @Composable
-fun LowCategoryItem(modifier: Modifier = Modifier, recipe: Recipe) {
+fun ItemList(modifier: Modifier = Modifier, recipe: Recipe) {
     Box(
         modifier = modifier
             .padding(10.dp)

@@ -1,6 +1,6 @@
 package com.example.recipeapp.domain.use_cases
 
-import com.example.myapplication.util.Resource
+import com.example.recipeapp.util.Resource
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow

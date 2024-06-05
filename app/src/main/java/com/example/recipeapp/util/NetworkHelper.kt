@@ -1,4 +1,4 @@
-package com.example.myapplication.util
+package com.example.recipeapp.util
 
 import android.content.Context
 import android.net.ConnectivityManager

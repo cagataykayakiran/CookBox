@@ -40,8 +40,26 @@ interface RecipeApi {
         @Query("number") number: Int = 15,
     ): RecipeListDto
 
+    @GET("recipes/complexSearch")
+    suspend fun getRecipesByLowReadyTime(
+        @Query("maxReadyTime") maxReadyTime: Int = 20,
+        @Query("addRecipeInformation") addRecipeInformation: Boolean = true,
+        @Query("addRecipeInstructions") addRecipeInstructions: Boolean = true,
+        @Query("apiKey") apiKey: String = API_KEY,
+        @Query("number") number: Int = 15,
+    ): RecipeListDto
+
+    @GET("recipes/complexSearch")
+    suspend fun getRecipesByHighProtein(
+        @Query("minProtein") minProtein: Int = 40,
+        @Query("addRecipeInformation") addRecipeInformation: Boolean = true,
+        @Query("addRecipeInstructions") addRecipeInstructions: Boolean = true,
+        @Query("apiKey") apiKey: String = API_KEY,
+        @Query("number") number: Int = 15,
+    ): RecipeListDto
+
     companion object {
         const val BASE_URL = "https://api.spoonacular.com/"
-        const val API_KEY = "4bbb550c165d4764ba0807ae1a2197ae"
+        const val API_KEY = "b47f014e527a4dc0a46fd3130cbf2fff"
     }
 }
