@@ -17,7 +17,7 @@ class LowReadyTimeViewModel @Inject constructor(
     private val getRecipesByLowReadyTime: GetRecipesByLowReadyTime
 ): ViewModel() {
 
-    private val _lowReadyTimeState = MutableStateFlow(MainState.MaxReadyTimeState())
+    private val _lowReadyTimeState = MutableStateFlow(MainState.LowReadyTimeState())
     val lowReadyTimeState = _lowReadyTimeState.asStateFlow()
 
     init {
@@ -29,7 +29,8 @@ class LowReadyTimeViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _lowReadyTimeState.value = _lowReadyTimeState.value.copy(
-                        data = result.data ?: emptyList()
+                        data = result.data ?: emptyList(),
+                        isLoading = false
                     )
                 }
                 is Resource.Loading -> {
@@ -39,7 +40,8 @@ class LowReadyTimeViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _lowReadyTimeState.value = _lowReadyTimeState.value.copy(
-                        error = result.message ?: "Error!"
+                        error = result.message ?: "Error!",
+                        isLoading = false
                     )
                 }
             }
