@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -101,4 +102,5 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.0")
 
+    implementation("be.digitalia.compose.htmlconverter:htmlconverter:0.9.5")
 }
