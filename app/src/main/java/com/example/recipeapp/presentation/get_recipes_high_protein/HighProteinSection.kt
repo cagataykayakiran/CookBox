@@ -7,10 +7,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.ItemList
 
 @Composable
 fun HighProteinSection(
+    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: HighProteinViewModel = hiltViewModel()
 ) {
@@ -21,7 +23,10 @@ fun HighProteinSection(
         modifier = modifier
     ) {
         items(highProteinState.data) { recipe ->
-            ItemList(recipe = recipe)
+            ItemList(
+                recipe = recipe,
+                navController = navController,
+            )
         }
     }
 }

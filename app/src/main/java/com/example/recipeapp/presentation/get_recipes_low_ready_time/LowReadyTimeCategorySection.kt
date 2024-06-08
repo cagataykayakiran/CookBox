@@ -8,10 +8,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.ItemList
 
 @Composable
 fun LowReadyTimeCategorySection(
+    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: LowReadyTimeViewModel = hiltViewModel()
 ) {
@@ -21,7 +23,9 @@ fun LowReadyTimeCategorySection(
         modifier = modifier,
     ) {
         items(lowReadyTimeState.data) { recipe ->
-            ItemList(recipe = recipe)
+            ItemList(navController = navController,
+                recipe = recipe
+            )
         }
     }
 }

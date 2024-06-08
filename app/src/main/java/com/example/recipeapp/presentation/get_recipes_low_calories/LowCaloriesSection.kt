@@ -8,12 +8,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.ItemList
 
 @Composable
 fun LowCaloriesSection(
+    navController: NavController,
     modifier: Modifier = Modifier,
-    lowCaloriesViewModel: LowCaloriesViewModel = hiltViewModel()
+    lowCaloriesViewModel: LowCaloriesViewModel = hiltViewModel(),
 ) {
 
     val lowCaloriesState by lowCaloriesViewModel.lowCaloriesState.collectAsState()
@@ -22,7 +24,10 @@ fun LowCaloriesSection(
         modifier = modifier,
     ) {
         items(lowCaloriesState.data) { recipe ->
-            ItemList(recipe = recipe)
+            ItemList(
+                recipe = recipe,
+                navController = navController,
+            )
         }
     }
 }
