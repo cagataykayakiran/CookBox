@@ -1,6 +1,7 @@
 package com.example.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,21 +17,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
-import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
+import com.example.recipeapp.presentation.get_recipe_detail.DetailEvent
+import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
+import com.example.recipeapp.util.Screen
 
 @Composable
-fun ItemList(modifier: Modifier = Modifier, recipe: Recipe) {
+fun ItemList(
+    modifier: Modifier = Modifier,
+    recipe: Recipe,
+    navController: NavController,
+    viewModel: RecipeDetailViewModel = hiltViewModel(),
+) {
     Box(
         modifier = modifier
             .padding(10.dp)
             .clip(RoundedCornerShape(15.dp))
             .size(130.dp, 215.dp)
-            .background(MainColorSecondary)
+            .background(BackgroundPrimary)
+            .clickable {
+                onRecipeClick(recipe, navController, viewModel)
+            }
     ){
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -59,11 +73,20 @@ fun ItemList(modifier: Modifier = Modifier, recipe: Recipe) {
             ) {
                 Text(
                     text = recipe.title,
-                    fontFamily = futuraSansFamily,
+                    fontFamily = FontFamily.SansSerif,
                     maxLines = 2,
                     fontSize = 15.sp
                 )
             }
         }
     }
+}
+
+fun onRecipeClick(
+    recipe: Recipe,
+    navController: NavController,
+    viewModel: RecipeDetailViewModel
+) {
+    viewModel.onEvent(DetailEvent.SelectRecipe(recipe.id))
+    navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
 }

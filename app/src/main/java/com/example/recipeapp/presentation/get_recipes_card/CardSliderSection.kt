@@ -14,7 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -26,9 +28,10 @@ import kotlinx.coroutines.yield
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun CardSliderSection(
-    navController: NavController,
     modifier: Modifier = Modifier,
-    recipeCardViewModel: RecipeCardViewModel,
+    recipeCardViewModel: RecipeCardViewModel = hiltViewModel(),
+    detailViewModel: RecipeDetailViewModel,
+    navController: NavController
 ) {
     val pagerState = rememberPagerState()
     val cardItemState by recipeCardViewModel.recipesState.collectAsState()
@@ -57,7 +60,11 @@ fun CardSliderSection(
                     .fillMaxWidth()
                     .height(200.dp)
             ) { page ->
-                CardItem(navController = navController, cardItemState.data[page])
+                CardItem(
+                    cardItemState.data[page],
+                    navController = navController,
+                    detailViewModel = detailViewModel
+                )
             }
             HorizontalPagerIndicator(
                 pagerState = pagerState,

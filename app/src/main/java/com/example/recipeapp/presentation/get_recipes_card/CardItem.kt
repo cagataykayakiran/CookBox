@@ -27,16 +27,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
+import com.example.recipeapp.presentation.components.onRecipeClick
+import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 
 @Composable
-fun CardItem(navController: NavController, recipe: Recipe) {
+fun CardItem(recipe: Recipe, navController: NavController, detailViewModel: RecipeDetailViewModel) {
     Card(
         modifier = Modifier
             .size(370.dp, 150.dp)
             .fillMaxHeight()
-            .clickable { },
+            .clickable {
+                onRecipeClick(
+                    recipe = recipe,
+                    navController = navController,
+                    viewModel = detailViewModel
+                )
+            },
         colors = CardDefaults.cardColors(containerColor = MainColorSecondary),
         shape = RoundedCornerShape(25.dp)
     ) {

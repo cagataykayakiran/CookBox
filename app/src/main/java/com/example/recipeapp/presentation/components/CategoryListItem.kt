@@ -1,6 +1,7 @@
 package com.example.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.HealthAndSafety
-import androidx.compose.material.icons.rounded.HourglassTop
-import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -26,19 +24,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
+import com.example.recipeapp.util.Screen
 
 @Composable
-fun CategoryListItem(modifier: Modifier = Modifier, recipe: Recipe) {
+fun CategoryListItem(modifier: Modifier = Modifier, navController: NavController, recipe: Recipe) {
     Box(
         modifier = modifier
             .padding(10.dp)
             .clip(RoundedCornerShape(15.dp))
-            .size(400.dp, 250.dp)
+            .size(400.dp, 150.dp)
             .background(MainColorSecondary)
+            .clickable {
+                navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
+            }
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -48,11 +51,11 @@ fun CategoryListItem(modifier: Modifier = Modifier, recipe: Recipe) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp)
+                    .height(100.dp)
                     .clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp))
             ) {
                 AsyncImage(
-                    model = "https://img.spoonacular.com/recipes/${recipe.id}-636x393.jpg",
+                    model = "https://img.spoonacular.com/recipes/${recipe.id}-556x370.jpg",
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -81,34 +84,6 @@ fun CategoryListItem(modifier: Modifier = Modifier, recipe: Recipe) {
                     Icon(
                         imageVector = Icons.Rounded.Star,
                         contentDescription = "Star",
-                    )
-                    Text(
-                        text = recipe.aggregateLikes.toString(),
-                        fontFamily = futuraSansFamily,
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.HourglassTop,
-                        contentDescription = "HourglassTop",
-                    )
-                    Text(
-                        text = recipe.readyInMinutes.toString(),
-                        fontFamily = futuraSansFamily,
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.HealthAndSafety,
-                        contentDescription = "HealthAndSafety"
-                    )
-                    Text(
-                        text = recipe.healthScore.toString(),
-                        fontFamily = futuraSansFamily,
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.PlayCircle,
-                        contentDescription = "HealthAndSafety"
-                    )
-                    Text(
-                        text = recipe.servings.toString(),
-                        fontFamily = futuraSansFamily,
                     )
                 }
             }
