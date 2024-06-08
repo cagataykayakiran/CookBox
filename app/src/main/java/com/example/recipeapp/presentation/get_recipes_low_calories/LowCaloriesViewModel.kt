@@ -1,7 +1,5 @@
 package com.example.recipeapp.presentation.get_recipes_low_calories
 
-import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.util.Resource
@@ -31,7 +29,8 @@ class LowCaloriesViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _lowCaloriesState.value = _lowCaloriesState.value.copy(
-                        data = result.data ?: emptyList()
+                        data = result.data ?: emptyList(),
+                        isLoading = false
                     )
                 }
                 is Resource.Loading -> {
@@ -41,7 +40,8 @@ class LowCaloriesViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _lowCaloriesState.value = _lowCaloriesState.value.copy(
-                        error = result.message ?: "Error!"
+                        error = result.message ?: "Error!",
+                        isLoading = false
                     )
                 }
             }

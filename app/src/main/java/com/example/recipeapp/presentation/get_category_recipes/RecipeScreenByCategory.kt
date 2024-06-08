@@ -38,12 +38,10 @@ fun RecipeScreenByCategory(
     modifier: Modifier = Modifier,
     category: String,
     viewModel: RecipeTypeViewModel,
-    navigateToDetail: (Int) -> Unit = {},
     navController: NavController,
 ) {
 
     val state by viewModel.typeByRecipeState.collectAsState()
-    //val isLoading = remember { mutableStateOf(true) }
 
     LaunchedEffect(category) {
         viewModel.onEvent(UIEvent.SelectCategory(category))
@@ -82,7 +80,7 @@ fun RecipeScreenByCategory(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 items(state.data) {
-                    CategoryListItem(recipe = it)
+                    CategoryListItem(navController = navController, recipe = it)
                 }
             }
             if(state.error.isNotBlank()) {

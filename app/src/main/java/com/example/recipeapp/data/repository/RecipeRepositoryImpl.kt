@@ -2,8 +2,10 @@ package com.example.recipeapp.data.repository
 
 
 import com.example.recipeapp.data.remote.RecipeApi
+import com.example.recipeapp.data.remote.response.toRecipeDetail
 import com.example.recipeapp.data.remote.response.toRecipeList
 import com.example.recipeapp.domain.model.Recipe
+import com.example.recipeapp.domain.model.RecipeDetail
 import com.example.recipeapp.domain.repository.RecipeRepository
 
 import javax.inject.Inject
@@ -30,5 +32,9 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getRecipesByHighProtein(): List<Recipe> {
         return recipeApi.getRecipesByHighProtein().toRecipeList()
+    }
+
+    override suspend fun getRecipesById(id: Int): RecipeDetail {
+        return recipeApi.getRecipesById(id).toRecipeDetail()
     }
 }

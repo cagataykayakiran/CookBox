@@ -71,7 +71,6 @@ fun SearchItem(recipe: Recipe, onEvent: (SearchUiEvents) -> Unit, isLoading: Boo
                         .background(MaterialTheme.colorScheme.background)
                 )
             }
-
             Text(
                 modifier = Modifier
                     .padding(
@@ -87,26 +86,9 @@ fun SearchItem(recipe: Recipe, onEvent: (SearchUiEvents) -> Unit, isLoading: Boo
                 overflow = TextOverflow.Ellipsis,
 
                 )
-            Text(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 12.dp,
-                        vertical = 4.dp
-                    ),
-                text = recipe.aggregateLikes.toString(),
-                fontFamily = futuraSansFamily,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                color = Color.Black,
-                overflow = TextOverflow.Ellipsis,
-            )
         }
-
         IconButton(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.TopEnd)) {
             Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, )
-
         }
-
     }
 }

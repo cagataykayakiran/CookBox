@@ -9,9 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,12 +21,10 @@ import com.example.recipeapp.presentation.components.AppBottomBar
 import com.example.recipeapp.presentation.components.AppSearchBar
 import com.example.recipeapp.presentation.components.AppTopBar
 import com.example.recipeapp.presentation.get_category_recipes.CategorySection
-import com.example.recipeapp.presentation.get_category_recipes.RecipeTypeViewModel
-import com.example.recipeapp.presentation.get_recipes_card.RecipeCardViewModel
+import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
 import com.example.recipeapp.presentation.get_recipes_high_protein.HighProteinSection
 import com.example.recipeapp.presentation.get_recipes_low_calories.LowCaloriesSection
 import com.example.recipeapp.presentation.get_recipes_low_ready_time.LowReadyTimeCategorySection
-import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 
@@ -35,15 +32,13 @@ import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 fun MainScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    recipeCardViewModel: RecipeCardViewModel = hiltViewModel(),
-    typeViewModel: RecipeTypeViewModel = hiltViewModel(),
+    detailViewModel: RecipeDetailViewModel = hiltViewModel()
 ) {
-
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { AppTopBar() },
+        topBar = { AppTopBar()},
         bottomBar = { AppBottomBar(navController = navController) },
-        containerColor = BackgroundPrimary
+        containerColor = Color.White
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -62,10 +57,7 @@ fun MainScreen(
                     fontSize = 20.sp,
                     fontFamily = futuraSansFamily
                 )
-                CardSliderSection(
-                    navController = navController,
-                    recipeCardViewModel = recipeCardViewModel
-                )
+                CardSliderSection(detailViewModel = detailViewModel, navController = navController)
             }
             item {
                 Text(
@@ -75,7 +67,7 @@ fun MainScreen(
                     fontFamily = futuraSansFamily
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                CategorySection(typeViewModel = typeViewModel, navController = navController)
+                CategorySection(navController = navController)
             }
             item {
                 Text(
@@ -84,7 +76,7 @@ fun MainScreen(
                     fontSize = 20.sp,
                     fontFamily = futuraSansFamily
                 )
-                LowCaloriesSection()
+                LowCaloriesSection(navController = navController)
             }
             item {
                 Text(
@@ -93,7 +85,7 @@ fun MainScreen(
                     fontSize = 20.sp,
                     fontFamily = futuraSansFamily
                 )
-                LowReadyTimeCategorySection()
+                LowReadyTimeCategorySection(navController = navController)
             }
             item {
                 Text(
@@ -102,7 +94,7 @@ fun MainScreen(
                     fontSize = 20.sp,
                     fontFamily = futuraSansFamily
                 )
-                HighProteinSection()
+                HighProteinSection(navController = navController)
             }
         }
     }

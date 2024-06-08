@@ -31,7 +31,7 @@ sealed interface MainState {
         val searchQuery: String = "",
     ): MainState
 
-    data class MaxReadyTimeState(
+    data class LowReadyTimeState(
         override val data: List<Recipe> = emptyList(),
         override val isLoading: Boolean = false,
         override val error: String = "",

@@ -29,7 +29,8 @@ class HighProteinViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _highProteinState.value = _highProteinState.value.copy(
-                        data = result.data ?: emptyList()
+                        data = result.data ?: emptyList(),
+                        isLoading = false
                     )
                 }
                 is Resource.Loading -> {
@@ -39,7 +40,8 @@ class HighProteinViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _highProteinState.value = _highProteinState.value.copy(
-                        error = result.message ?: "Error!"
+                        error = result.message ?: "Error!",
+                        isLoading = false
                     )
                 }
             }

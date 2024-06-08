@@ -31,8 +31,9 @@ fun NavigationGraph(
         composable(route = Screen.FavoriteScreen.route) {
             FavoriteScreen(navController = navController)
         }
-        composable(route = Screen.RecipeDetail.route) {
-            RecipeDetailScreen()
+        composable(
+            route = Screen.RecipeDetail.route + "/{recipeId}") {
+            RecipeDetailScreen(navController = navController)
         }
         composable(route = Screen.SearchScreen.route) {
             SearchScreen()
