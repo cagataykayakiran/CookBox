@@ -1,9 +1,15 @@
-package com.example.recipeapp.domain.model
+package com.example.recipeapp.data.local
 
-import com.example.recipeapp.data.local.RecipeEntity
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.recipeapp.domain.model.ExtendedIngredient
+import com.example.recipeapp.domain.model.Recipe
+import com.example.recipeapp.domain.model.RecipeDetail
 
-data class RecipeDetail(
-    val id: Int,
+@Entity(tableName = "recipes")
+data class RecipeEntity(
+    @PrimaryKey
+    val mainId: Int,
     val title: String,
     val image: String,
     val vegetarian: Boolean,
@@ -22,16 +28,24 @@ data class RecipeDetail(
     val servings: Int,
     val sourceUrl: String,
     val summary: String,
-    val extendedIngredients: List<ExtendedIngredient>,
     val instructions: String,
-    val dishTypes: List<String>,
-    val isFavorite: Boolean = false
+    val dishTypes: String,
+    val isFavorite: Boolean = false,
 )
 
-fun RecipeDetail.toRecipeEntity(isFavorite: Boolean = false): RecipeEntity {
-    return RecipeEntity(
+fun RecipeEntity.toRecipe(): Recipe {
+    return Recipe(
+        id = mainId,
         title = title,
-        image =image,
+        image = image,
+    )
+}
+
+fun RecipeEntity.toRecipeDetail(ingredients: List<ExtendedIngredient>): RecipeDetail {
+    return RecipeDetail(
+        id = mainId,
+        title = title,
+        image = image,
         vegetarian = vegetarian,
         vegan = vegan,
         glutenFree = glutenFree,
@@ -48,13 +62,10 @@ fun RecipeDetail.toRecipeEntity(isFavorite: Boolean = false): RecipeEntity {
         servings = servings,
         sourceUrl = sourceUrl,
         summary = summary,
+        extendedIngredients = ingredients,
         instructions = instructions,
-        dishTypes = dishTypes.joinToString(","),
-        mainId = id,
+        dishTypes = dishTypes.split(","),
         isFavorite = isFavorite
     )
 }
-
-
-
 
