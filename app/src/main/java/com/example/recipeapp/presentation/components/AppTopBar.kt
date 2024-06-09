@@ -18,7 +18,7 @@ import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 @Composable
 fun AppTopBar(modifier: Modifier = Modifier) {
 
-    val text = buildAnnotatedString {
+    val header = buildAnnotatedString {
         append("Discovery Your \nFavourite ")
         withStyle(style = SpanStyle(color = MainColorPrimary)) {
             append("Recipes !")
@@ -28,7 +28,7 @@ fun AppTopBar(modifier: Modifier = Modifier) {
     TopAppBar(
         modifier = modifier.padding(top = 15.dp),
         title = {
-            Text(text = text)
+            Text(text = header)
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.White
