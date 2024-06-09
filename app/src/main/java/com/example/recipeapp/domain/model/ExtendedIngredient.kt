@@ -1,5 +1,7 @@
 package com.example.recipeapp.domain.model
 
+import com.example.recipeapp.data.local.IngredientEntity
+
 data class ExtendedIngredient(
     val id: Int,
     val nameClean: String,
@@ -8,3 +10,15 @@ data class ExtendedIngredient(
     val name: String,
     val original: String
 )
+
+fun ExtendedIngredient.toIngredientEntity(recipeId: Int): IngredientEntity {
+    return IngredientEntity(
+        id = id,
+        recipeId = recipeId,
+        nameClean = nameClean,
+        amount =amount,
+        image = image,
+        name = name,
+        original = original
+    )
+}
