@@ -1,7 +1,11 @@
 package com.example.recipeapp.domain.repository
 
+import com.example.recipeapp.data.local.RecipeEntity
+import com.example.recipeapp.data.local.RecipeWithIngredients
+import com.example.recipeapp.domain.model.ExtendedIngredient
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.model.RecipeDetail
+import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
 
@@ -16,4 +20,10 @@ interface RecipeRepository {
     suspend fun getRecipesByHighProtein(): List<Recipe>
 
     suspend fun getRecipesById(id: Int): RecipeDetail
+
+    suspend fun getLocalRecipes(): Flow<List<RecipeEntity>>
+
+    suspend fun saveRecipeWithIngredients(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>)
+
+    suspend fun getRecipeWithIngredientsById(recipeId: Int): RecipeWithIngredients
 }
