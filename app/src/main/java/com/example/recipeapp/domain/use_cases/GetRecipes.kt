@@ -1,6 +1,5 @@
 package com.example.recipeapp.domain.use_cases
 
-import com.example.recipeapp.util.NetworkHelper
 import com.example.recipeapp.util.Resource
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.repository.RecipeRepository
@@ -11,8 +10,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetRecipes @Inject constructor(
-    private val repository: RecipeRepository,
-    private val networkHelper: NetworkHelper
+    private val repository: RecipeRepository
 ) {
     operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
         try {
