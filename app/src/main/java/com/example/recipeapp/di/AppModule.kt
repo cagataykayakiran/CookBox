@@ -1,6 +1,8 @@
 package com.example.recipeapp.di
 
 import android.content.Context
+import androidx.room.Room
+import com.example.recipeapp.data.local.RecipeDatabase
 import com.example.recipeapp.util.NetworkHelper
 import com.example.recipeapp.data.remote.RecipeApi
 import com.example.recipeapp.data.remote.RecipeApi.Companion.BASE_URL
@@ -23,8 +25,18 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRecipeRepository(api: RecipeApi): RecipeRepository {
-        return RecipeRepositoryImpl(api)
+    fun provideRecipeRepository(api: RecipeApi, recipeDatabase: RecipeDatabase, networkHelper: NetworkHelper): RecipeRepository {
+        return RecipeRepositoryImpl(api, recipeDatabase.recipeDao(), networkHelper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRecipeDatabase(@ApplicationContext context: Context): RecipeDatabase {
+        return Room.databaseBuilder(
+            context,
+            klass = RecipeDatabase::class.java,
+            name = "recipe_db_1.1",
+        ).build()
     }
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
