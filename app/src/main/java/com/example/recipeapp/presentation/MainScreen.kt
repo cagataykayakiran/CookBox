@@ -36,7 +36,7 @@ fun MainScreen(
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { AppTopBar()},
+        topBar = { AppTopBar() },
         bottomBar = { AppBottomBar(navController = navController) },
         containerColor = Color.White
     ) { innerPadding ->
@@ -56,7 +56,10 @@ fun MainScreen(
                     fontWeight = FontWeight.Medium,
                     fontSize = 20.sp
                 )
-                CardSliderSection(detailViewModel = detailViewModel, navController = navController)
+                CardSliderSection(
+                    detailViewModel = detailViewModel,
+                    navController = navController
+                )
             }
             item {
                 Text(

@@ -8,6 +8,6 @@ import com.example.recipeapp.data.local.entity.IngredientEntity
 @Dao
 interface IngredientDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertIngredientEntity(ingredientEntity: IngredientEntity)
 }
