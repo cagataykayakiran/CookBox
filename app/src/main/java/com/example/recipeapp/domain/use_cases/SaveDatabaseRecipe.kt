@@ -9,7 +9,11 @@ class SaveDatabaseRecipe @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) {
 
-    suspend operator fun invoke(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>) {
-        recipeRepository.insertRecipeDetailWithIngredients(recipe, ingredients)
+    suspend operator fun invoke(
+        recipe: RecipeDetail,
+        ingredients: List<ExtendedIngredient>,
+        isFavorite: Boolean) {
+        recipeRepository.insertRecipeDetailWithIngredients(
+            recipe, ingredients, isFavorite)
     }
 }

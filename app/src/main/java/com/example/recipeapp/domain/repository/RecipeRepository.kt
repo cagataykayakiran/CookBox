@@ -24,12 +24,11 @@ interface RecipeRepository {
 
     suspend fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>>
 
-    suspend fun insertRecipeDetailWithIngredients(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>)
+    suspend fun insertRecipeDetailWithIngredients(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>, isFavorite: Boolean)
 
-    suspend fun getRecipeWithIngredientsById(recipeId: Int): RecipeWithIngredients
+    suspend fun getRecipeWithIngredientsById(recipeId: Int): RecipeWithIngredients?
 
-    suspend fun getLocalRecipes(): List<RecipeEntity>
+    suspend fun getLocalRecipes(): Flow<List<RecipeEntity>>
 
     suspend fun insertRecipe(recipe: RecipeEntity)
-
 }

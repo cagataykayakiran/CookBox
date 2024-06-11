@@ -65,7 +65,7 @@ fun RecipeDetailScreen(
                     IconButton(onClick = {
                         state.recipe?.let { recipe ->
                             databaseViewModel.onEvent(
-                                LocalEvent.SaveRecipe(
+                                LocalEvent.FavouriteRecipe(
                                     recipeDetail = recipe,
                                     ingredients = recipe.extendedIngredients
                                 )

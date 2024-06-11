@@ -22,7 +22,7 @@ class DatabaseViewModel @Inject constructor(
     private val getLocalRecipes: GetLocalRecipes,
 ) : ViewModel() {
 
-    private val _recipes = MutableStateFlow(RecipesDbState())
+    private val _recipes = MutableStateFlow(RecipeState())
     val recipes = _recipes.asStateFlow()
 
     init {
@@ -34,15 +34,16 @@ class DatabaseViewModel @Inject constructor(
     }
     fun onEvent(event: LocalEvent) {
         when(event){
-            is LocalEvent.SaveRecipe -> {
-                saveRecipe(event.recipeDetail, event.ingredients)
+            is LocalEvent.FavouriteRecipe -> {
+                toggleFavorite(event.recipeDetail, event.ingredients)
             }
         }
     }
 
-    private fun saveRecipe(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>) {
+    private fun toggleFavorite(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>) {
         viewModelScope.launch {
-            saveDatabaseRecipe(recipe, ingredients)
+            val isFavorite = recipe.isFavorite
+            saveDatabaseRecipe(recipe = recipe, ingredients = ingredients, isFavorite = !isFavorite)
         }
     }
 

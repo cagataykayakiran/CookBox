@@ -28,7 +28,7 @@ data class RecipeDetail(
     val isFavorite: Boolean = false
 )
 
-fun RecipeDetail.toRecipeEntity(isFavorite: Boolean = false): RecipeDetailEntity {
+fun RecipeDetail.toRecipeEntity(isFavorite: Boolean): RecipeDetailEntity {
     return RecipeDetailEntity(
         title = title,
         image =image,
