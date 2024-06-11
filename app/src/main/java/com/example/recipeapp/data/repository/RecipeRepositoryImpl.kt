@@ -7,8 +7,6 @@ import com.example.recipeapp.data.local.entity.RecipeDetailEntity
 import com.example.recipeapp.data.local.RecipeWithIngredients
 import com.example.recipeapp.data.local.dao.IngredientDao
 import com.example.recipeapp.data.local.dao.RecipeDetailDao
-import com.example.recipeapp.data.local.entity.toExtendedIngredient
-import com.example.recipeapp.data.local.entity.toRecipeDetail
 import com.example.recipeapp.data.remote.RecipeApi
 import com.example.recipeapp.data.remote.response.toRecipeDetail
 import com.example.recipeapp.data.remote.response.toRecipeList
@@ -59,9 +57,10 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun insertRecipeDetailWithIngredients(
         recipe: RecipeDetail,
-        ingredients: List<ExtendedIngredient>
+        ingredients: List<ExtendedIngredient>,
+        isFavorite: Boolean
     ) {
-        recipeDetailDao.insertRecipeDetail(recipe.toRecipeEntity(isFavorite = true))
+        recipeDetailDao.insertRecipeDetail(recipe.toRecipeEntity(isFavorite = isFavorite))
         ingredients.forEach { ingredient ->
             ingredientDao.insertIngredientEntity(
                 ingredient.toIngredientEntity(recipe.id).copy(recipeId = recipe.id)
@@ -73,7 +72,7 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeDetailDao.getRecipeWithIngredientsById(recipeId)
     }
 
-    override suspend fun getLocalRecipes(): List<RecipeEntity> {
+    override suspend fun getLocalRecipes(): Flow<List<RecipeEntity>> {
         return recipeDao.getRecipes()
     }
 
