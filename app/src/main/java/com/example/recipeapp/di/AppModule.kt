@@ -25,8 +25,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRecipeRepository(api: RecipeApi, recipeDatabase: RecipeDatabase, networkHelper: NetworkHelper): RecipeRepository {
-        return RecipeRepositoryImpl(api, recipeDatabase.recipeDao(), networkHelper)
+    fun provideRecipeRepository(
+        api: RecipeApi,
+        recipeDatabase: RecipeDatabase,
+    ): RecipeRepository {
+        return RecipeRepositoryImpl(
+            api,
+            recipeDatabase.recipeDao(),
+            recipeDatabase.recipeDetailDao(),
+            recipeDatabase.ingredientDao()
+        )
     }
 
     @Provides
@@ -35,7 +43,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             klass = RecipeDatabase::class.java,
-            name = "recipe_db_1.1",
+            name = "recipe_db_1.7",
         ).build()
     }
 
