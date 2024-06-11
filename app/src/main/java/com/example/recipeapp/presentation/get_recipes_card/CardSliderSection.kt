@@ -1,12 +1,10 @@
 package com.example.recipeapp.presentation.get_recipes_card
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,11 +52,6 @@ fun CardSliderSection(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        if (cardItemState.isLoading) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-        }
         if (cardItemState.data.isNotEmpty()) {
             HorizontalPager(
                 count = cardItemState.data.size,

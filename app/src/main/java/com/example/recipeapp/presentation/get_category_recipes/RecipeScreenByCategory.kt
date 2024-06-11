@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.recipeapp.presentation.components.AnimatedPreloader
 import com.example.recipeapp.presentation.components.CategoryListItem
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
@@ -95,7 +96,7 @@ fun RecipeScreenByCategory(
                 )
             }
             if(state.isLoading) {
-                CircularProgressIndicator()
+                AnimatedPreloader(modifier = Modifier.align(Alignment.Center))
             }
         }
     }

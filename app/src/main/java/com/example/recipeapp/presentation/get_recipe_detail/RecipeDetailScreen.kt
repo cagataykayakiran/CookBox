@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +35,7 @@ import com.example.recipeapp.presentation.components.AppBottomBar
 import com.example.recipeapp.presentation.components.NavigationIcon
 import com.example.recipeapp.presentation.favorite_screen.DatabaseViewModel
 import com.example.recipeapp.presentation.favorite_screen.LocalEvent
+import com.example.recipeapp.presentation.components.AnimatedPreloader
 import com.example.recipeapp.presentation.get_recipe_detail.components.ImageSection
 import com.example.recipeapp.presentation.get_recipe_detail.components.InformationSection
 import com.example.recipeapp.presentation.get_recipe_detail.components.IngredientSection
@@ -129,7 +130,7 @@ fun RecipeDetailScreen(
                 )
             }
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                AnimatedPreloader(modifier = Modifier.size(150.dp).align(Alignment.Center))
             }
         }
     }
