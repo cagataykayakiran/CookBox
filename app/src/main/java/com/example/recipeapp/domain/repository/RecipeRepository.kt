@@ -1,6 +1,7 @@
 package com.example.recipeapp.domain.repository
 
-import com.example.recipeapp.data.local.RecipeEntity
+import com.example.recipeapp.data.local.entity.RecipeEntity
+import com.example.recipeapp.data.local.entity.RecipeDetailEntity
 import com.example.recipeapp.data.local.RecipeWithIngredients
 import com.example.recipeapp.domain.model.ExtendedIngredient
 import com.example.recipeapp.domain.model.Recipe
@@ -21,9 +22,14 @@ interface RecipeRepository {
 
     suspend fun getRecipesById(id: Int): RecipeDetail
 
-    suspend fun getLocalRecipes(): Flow<List<RecipeEntity>>
+    suspend fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>>
 
-    suspend fun saveRecipeWithIngredients(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>)
+    suspend fun insertRecipeDetailWithIngredients(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>)
 
     suspend fun getRecipeWithIngredientsById(recipeId: Int): RecipeWithIngredients
+
+    suspend fun getLocalRecipes(): List<RecipeEntity>
+
+    suspend fun insertRecipe(recipe: RecipeEntity)
+
 }

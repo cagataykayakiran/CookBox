@@ -1,12 +1,14 @@
 package com.example.recipeapp.data.repository
 
 
-import android.util.Log
-import com.example.recipeapp.data.local.RecipeDao
-import com.example.recipeapp.data.local.RecipeEntity
+import com.example.recipeapp.data.local.entity.RecipeEntity
+import com.example.recipeapp.data.local.dao.RecipeDao
+import com.example.recipeapp.data.local.entity.RecipeDetailEntity
 import com.example.recipeapp.data.local.RecipeWithIngredients
-import com.example.recipeapp.data.local.toExtendedIngredient
-import com.example.recipeapp.data.local.toRecipeDetail
+import com.example.recipeapp.data.local.dao.IngredientDao
+import com.example.recipeapp.data.local.dao.RecipeDetailDao
+import com.example.recipeapp.data.local.entity.toExtendedIngredient
+import com.example.recipeapp.data.local.entity.toRecipeDetail
 import com.example.recipeapp.data.remote.RecipeApi
 import com.example.recipeapp.data.remote.response.toRecipeDetail
 import com.example.recipeapp.data.remote.response.toRecipeList
@@ -16,7 +18,6 @@ import com.example.recipeapp.domain.model.RecipeDetail
 import com.example.recipeapp.domain.model.toIngredientEntity
 import com.example.recipeapp.domain.model.toRecipeEntity
 import com.example.recipeapp.domain.repository.RecipeRepository
-import com.example.recipeapp.util.NetworkHelper
 import kotlinx.coroutines.flow.Flow
 
 import javax.inject.Inject
@@ -24,7 +25,8 @@ import javax.inject.Inject
 class RecipeRepositoryImpl @Inject constructor(
     private val recipeApi: RecipeApi,
     private val recipeDao: RecipeDao,
-    private val networkHelper: NetworkHelper
+    private val recipeDetailDao: RecipeDetailDao,
+    private val ingredientDao: IngredientDao
 ) : RecipeRepository {
 
     override suspend fun getRecipes(): List<Recipe> {
@@ -48,43 +50,34 @@ class RecipeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRecipesById(id: Int): RecipeDetail {
-        return if (networkHelper.isNetworkConnected()) {
-            try {
-                recipeApi.getRecipesById(id).toRecipeDetail()
-            } catch (e: Exception) {
-                Log.e("RecipeRepositoryImpl", "getRecipesById: $id ${e.message}")
-                val recipeDetail = recipeDao.getRecipeWithIngredientsById(id)
-                recipeDetail.recipe.toRecipeDetail(
-                    recipeDetail.ingredients.map { it.toExtendedIngredient() }
-                )
-            }
-        } else {
-            val recipeDetail = recipeDao.getRecipeWithIngredientsById(id)
-            recipeDetail.recipe.toRecipeDetail(
-                recipeDetail.ingredients.map { it.toExtendedIngredient() }
-            )
-        }
+        return recipeApi.getRecipesById(id).toRecipeDetail()
     }
 
-
-    override suspend fun getLocalRecipes(): Flow<List<RecipeEntity>> {
-        return recipeDao.getLocalRecipes()
+    override suspend fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>> {
+        return recipeDetailDao.getFavoriteRecipe()
     }
 
-    override suspend fun saveRecipeWithIngredients(
+    override suspend fun insertRecipeDetailWithIngredients(
         recipe: RecipeDetail,
         ingredients: List<ExtendedIngredient>
     ) {
-        recipeDao.insertRecipe(recipe.toRecipeEntity(isFavorite = true))
+        recipeDetailDao.insertRecipeDetail(recipe.toRecipeEntity(isFavorite = true))
         ingredients.forEach { ingredient ->
-            recipeDao.insertIngredientEntity(
+            ingredientDao.insertIngredientEntity(
                 ingredient.toIngredientEntity(recipe.id).copy(recipeId = recipe.id)
             )
         }
     }
 
     override suspend fun getRecipeWithIngredientsById(recipeId: Int): RecipeWithIngredients {
-        return recipeDao.getRecipeWithIngredientsById(recipeId)
+        return recipeDetailDao.getRecipeWithIngredientsById(recipeId)
     }
 
+    override suspend fun getLocalRecipes(): List<RecipeEntity> {
+        return recipeDao.getRecipes()
+    }
+
+    override suspend fun insertRecipe(recipe: RecipeEntity) {
+        return recipeDao.insertRecipe(recipe)
+    }
 }
