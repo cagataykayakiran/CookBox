@@ -4,7 +4,7 @@ import com.example.recipeapp.domain.model.ExtendedIngredient
 import com.example.recipeapp.domain.model.RecipeDetail
 
 sealed class LocalEvent {
-    data class SaveRecipe(
+    data class FavouriteRecipe(
         val recipeDetail: RecipeDetail,
         val ingredients: List<ExtendedIngredient>
     ) : LocalEvent()
