@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.presentation.components.AppBottomBar
 import com.example.recipeapp.presentation.components.NavigationIcon
-import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,7 +68,7 @@ fun FavoriteScreen(
                     Box(
                         modifier = Modifier
                             .size(200.dp, 200.dp)
-                            .background(MainColorPrimary)
+                            .background(BackgroundPrimary)
                             .clickable {
                                 navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
                             },
