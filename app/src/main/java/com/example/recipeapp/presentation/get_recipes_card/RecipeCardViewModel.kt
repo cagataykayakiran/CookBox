@@ -6,7 +6,6 @@ import com.example.recipeapp.util.Resource
 import com.example.recipeapp.domain.use_cases.GetPopularRecipes
 import com.example.recipeapp.presentation.MainState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -37,7 +36,6 @@ class RecipeCardViewModel @Inject constructor(
 
                 is Resource.Loading -> {
                     _recipesState.value = _recipesState.value.copy(isLoading = true)
-                    delay(3000)
                 }
 
                 is Resource.Error -> {

@@ -14,15 +14,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -35,7 +32,7 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 15.dp),
-        horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -59,17 +56,6 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Search Recipes...")
-            }
-        }
-        Box(
-            modifier = Modifier
-                .size(35.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(MainColorPrimary),
-            contentAlignment = Alignment.Center
-        ) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Default.FilterAlt, contentDescription = null, tint = Color.White)
             }
         }
     }
