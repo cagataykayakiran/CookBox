@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
 
-    suspend fun getRecipes(): List<Recipe>
+    suspend fun getPopularRecipes(): List<Recipe>
 
     suspend fun getTypeByRecipes(diet: String): List<Recipe>
 
