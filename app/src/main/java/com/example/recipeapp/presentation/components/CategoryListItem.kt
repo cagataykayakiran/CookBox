@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +27,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
-import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 import com.example.recipeapp.util.Screen
 
 @Composable
@@ -68,10 +66,8 @@ fun CategoryListItem(modifier: Modifier = Modifier, navController: NavController
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
+                BodyText(
                     text = recipe.title,
-                    fontFamily = futuraSansFamily,
-                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Row(

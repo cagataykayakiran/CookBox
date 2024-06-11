@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -26,9 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.recipeapp.presentation.components.BodyText
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
-import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
-import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
+import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 import com.example.recipeapp.util.Screen
 
 @Composable
@@ -68,7 +67,7 @@ fun CategoryItem(
         modifier = Modifier
             .clip(RoundedCornerShape(20.dp))
             .size(75.dp, 110.dp)
-            .background(if (isSelected) MainColorPrimary else BackgroundPrimary)
+            .background(if (isSelected) MainColorSecondary else BackgroundPrimary)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
@@ -90,12 +89,11 @@ fun CategoryItem(
                     modifier = Modifier.size(70.dp)
                 )
             }
-            Text(
+            BodyText(
                 text = name,
                 color = if (isSelected) Color.White else Color.Black,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
-                fontFamily = futuraSansFamily,
                 maxLines = 1
             )
         }

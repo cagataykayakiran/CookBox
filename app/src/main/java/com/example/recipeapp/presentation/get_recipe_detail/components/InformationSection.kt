@@ -30,6 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import be.digitalia.compose.htmlconverter.htmlToString
 import com.example.recipeapp.domain.model.RecipeDetail
+import com.example.recipeapp.presentation.components.BodyText
+import com.example.recipeapp.presentation.components.TitleText
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -41,7 +43,7 @@ fun InformationSection(modifier: Modifier = Modifier, recipe: RecipeDetail) {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        CustomHeaderText(text = recipe.title)
+        TitleText(text = recipe.title)
         Row(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
@@ -60,9 +62,9 @@ fun InformationSection(modifier: Modifier = Modifier, recipe: RecipeDetail) {
                 text = recipe.healthScore.toString() + " Health Score"
             )
         }
-        CustomHeaderText(text = "About")
-        CustomText(text = remember(recipe.summary) { htmlToString(recipe.summary) })
-        CustomHeaderText(text = "Tags")
+        TitleText(text = "About")
+        BodyText(text = remember(recipe.summary) { htmlToString(recipe.summary) }, maxLines = 2)
+        TitleText(text = "Tags")
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -87,7 +89,7 @@ fun InformationItem(modifier: Modifier = Modifier, icon: ImageVector, text: Stri
             modifier = Modifier.size(30.dp),
             tint = MainColorPrimary
         )
-        CustomText(text = text)
+        BodyText(text = text, maxLines = 2)
     }
 }
 
