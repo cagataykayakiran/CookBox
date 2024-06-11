@@ -32,7 +32,7 @@ import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 fun MainScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    detailViewModel: RecipeDetailViewModel = hiltViewModel()
+    detailViewModel: RecipeDetailViewModel = hiltViewModel(),
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
