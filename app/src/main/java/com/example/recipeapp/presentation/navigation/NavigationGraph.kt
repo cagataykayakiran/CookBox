@@ -36,7 +36,7 @@ fun NavigationGraph(
             RecipeDetailScreen(navController = navController)
         }
         composable(route = Screen.SearchScreen.route) {
-            SearchScreen()
+            SearchScreen(navController = navController)
         }
         composable(route = Screen.RecipeListScreenByCategory.route + "/{category}") {
             val category = it.arguments?.getString("category") ?: ""

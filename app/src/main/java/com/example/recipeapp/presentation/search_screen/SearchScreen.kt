@@ -1,7 +1,6 @@
 package com.example.recipeapp.presentation.search_screen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
@@ -29,37 +27,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.recipeapp.presentation.search_screen.component.SearchItem
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
+import com.example.recipeapp.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
+    navController: NavController
+) {
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
-    val interactionSource = remember { MutableInteractionSource() }
-    val items = remember {
-        mutableListOf(
-            "Item 1",
-            "Item 2",
-            "Item 3",
-            "Item 4",
-            "Item 5",
-        )
-    }
     val state by viewModel.searchScreenState.collectAsState()
 
     Box(
         modifier = modifier
-            .fillMaxSize()
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = { focusManager.clearFocus() }),
+            .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
         SearchBar(
@@ -101,11 +89,12 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hil
                 verticalArrangement = Arrangement.spacedBy(15.dp),
             ) {
                 items(state.data) { recipe ->
-                    SearchItem(recipe = recipe, viewModel::onEvent, isLoading = state.isLoading)
+                    SearchItem(recipe = recipe) {
+                        navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
+                    }
                 }
             }
         }
     }
 }
-
 

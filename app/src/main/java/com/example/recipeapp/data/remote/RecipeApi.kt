@@ -57,6 +57,6 @@ interface RecipeApi {
 
     companion object {
         const val BASE_URL = "https://api.spoonacular.com/"
-        const val API_KEY = "1a95a03b95be46fba370a108f6d10128"
+        const val API_KEY = "1c9c980dd53b495fb095946854a01c77"
     }
 }
