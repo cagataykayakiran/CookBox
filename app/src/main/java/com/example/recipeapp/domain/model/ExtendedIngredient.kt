@@ -1,6 +1,6 @@
 package com.example.recipeapp.domain.model
 
-import com.example.recipeapp.data.local.IngredientEntity
+import com.example.recipeapp.data.local.entity.IngredientEntity
 
 data class ExtendedIngredient(
     val id: Int,
