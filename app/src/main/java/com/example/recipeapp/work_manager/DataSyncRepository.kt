@@ -13,7 +13,7 @@ class DataSyncRepository(
         val lowCaloriesRecipes = repository.getRecipesByLowCalories()
         val lowReadyTimeRecipes = repository.getRecipesByLowReadyTime()
         val highCaloriesRecipes = repository.getRecipesByHighProtein()
-        val breakfastRecipes = repository.getRecipes()
+        val breakfastRecipes = repository.getPopularRecipes()
 
         val allRecipes =
             lowCaloriesRecipes + lowReadyTimeRecipes + highCaloriesRecipes + breakfastRecipes

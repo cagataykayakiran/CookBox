@@ -52,10 +52,9 @@ fun MainScreen(
             }
             item {
                 Text(
-                    text = "Amazing Breakfast",
+                    text = "Popular",
                     fontWeight = FontWeight.Medium,
-                    fontSize = 20.sp,
-                    fontFamily = futuraSansFamily
+                    fontSize = 20.sp
                 )
                 CardSliderSection(detailViewModel = detailViewModel, navController = navController)
             }

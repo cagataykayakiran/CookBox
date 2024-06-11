@@ -9,8 +9,8 @@ import retrofit2.http.Query
 interface RecipeApi {
 
     @GET("recipes/complexSearch")
-    suspend fun getBreakfastRecipeList(
-        @Query("type") type: String = "Breakfast",
+    suspend fun getPopularRecipes(
+        @Query("sort") type: String = "popularity",
         @Query("apiKey") apiKey: String = API_KEY,
     ): RecipeListDto
 
@@ -57,6 +57,6 @@ interface RecipeApi {
 
     companion object {
         const val BASE_URL = "https://api.spoonacular.com/"
-        const val API_KEY = "1efcb934f9ea45589a15ea8403ab2cdd"
+        const val API_KEY = "1a95a03b95be46fba370a108f6d10128"
     }
 }

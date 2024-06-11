@@ -3,9 +3,10 @@ package com.example.recipeapp.presentation.get_recipes_card
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.util.Resource
-import com.example.recipeapp.domain.use_cases.GetRecipes
+import com.example.recipeapp.domain.use_cases.GetPopularRecipes
 import com.example.recipeapp.presentation.MainState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipeCardViewModel @Inject constructor(
-    private val getRecipes: GetRecipes
+    private val getPopularRecipes: GetPopularRecipes
 ) : ViewModel() {
 
     private val _recipesState = MutableStateFlow(MainState.CardRecipeState())
@@ -25,7 +26,7 @@ class RecipeCardViewModel @Inject constructor(
     }
 
     private fun getRecipeList() {
-        getRecipes().onEach { result ->
+        getPopularRecipes().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _recipesState.value = _recipesState.value.copy(
@@ -36,6 +37,7 @@ class RecipeCardViewModel @Inject constructor(
 
                 is Resource.Loading -> {
                     _recipesState.value = _recipesState.value.copy(isLoading = true)
+                    delay(3000)
                 }
 
                 is Resource.Error -> {

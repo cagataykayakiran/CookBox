@@ -29,8 +29,8 @@ class RecipeRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao
 ) : RecipeRepository {
 
-    override suspend fun getRecipes(): List<Recipe> {
-        return recipeApi.getBreakfastRecipeList().toRecipeList()
+    override suspend fun getPopularRecipes(): List<Recipe> {
+        return recipeApi.getPopularRecipes().toRecipeList()
     }
 
     override suspend fun getTypeByRecipes(diet: String): List<Recipe> {
