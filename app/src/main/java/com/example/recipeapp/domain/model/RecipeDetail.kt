@@ -1,6 +1,6 @@
 package com.example.recipeapp.domain.model
 
-import com.example.recipeapp.data.local.RecipeEntity
+import com.example.recipeapp.data.local.entity.RecipeDetailEntity
 
 data class RecipeDetail(
     val id: Int,
@@ -28,8 +28,8 @@ data class RecipeDetail(
     val isFavorite: Boolean = false
 )
 
-fun RecipeDetail.toRecipeEntity(isFavorite: Boolean = false): RecipeEntity {
-    return RecipeEntity(
+fun RecipeDetail.toRecipeEntity(isFavorite: Boolean = false): RecipeDetailEntity {
+    return RecipeDetailEntity(
         title = title,
         image =image,
         vegetarian = vegetarian,

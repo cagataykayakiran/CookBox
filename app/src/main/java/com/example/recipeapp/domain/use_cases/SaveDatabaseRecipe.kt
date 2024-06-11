@@ -10,6 +10,6 @@ class SaveDatabaseRecipe @Inject constructor(
 ) {
 
     suspend operator fun invoke(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>) {
-        recipeRepository.saveRecipeWithIngredients(recipe, ingredients)
+        recipeRepository.insertRecipeDetailWithIngredients(recipe, ingredients)
     }
 }

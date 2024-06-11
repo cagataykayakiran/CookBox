@@ -29,7 +29,7 @@ interface RecipeApi {
 
     @GET("recipes/complexSearch")
     suspend fun getRecipesByLowCalories(
-        @Query("maxCalories") maxCalories: Int = 40,
+        @Query("maxCalories") maxCalories: Int = 200,
         @Query("apiKey") apiKey: String = API_KEY,
         @Query("number") number: Int = 15,
     ): RecipeListDto
@@ -57,6 +57,6 @@ interface RecipeApi {
 
     companion object {
         const val BASE_URL = "https://api.spoonacular.com/"
-        const val API_KEY = "39f7098c381c44b084f733dacad0be8c"
+        const val API_KEY = "1efcb934f9ea45589a15ea8403ab2cdd"
     }
 }

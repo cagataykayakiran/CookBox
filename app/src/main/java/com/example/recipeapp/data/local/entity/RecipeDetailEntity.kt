@@ -1,4 +1,4 @@
-package com.example.recipeapp.data.local
+package com.example.recipeapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,8 +6,8 @@ import com.example.recipeapp.domain.model.ExtendedIngredient
 import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.model.RecipeDetail
 
-@Entity(tableName = "recipes")
-data class RecipeEntity(
+@Entity(tableName = "recipes_detail")
+data class RecipeDetailEntity(
     @PrimaryKey
     val mainId: Int,
     val title: String,
@@ -33,7 +33,7 @@ data class RecipeEntity(
     val isFavorite: Boolean = false,
 )
 
-fun RecipeEntity.toRecipe(): Recipe {
+fun RecipeDetailEntity.toRecipe(): Recipe {
     return Recipe(
         id = mainId,
         title = title,
@@ -41,7 +41,7 @@ fun RecipeEntity.toRecipe(): Recipe {
     )
 }
 
-fun RecipeEntity.toRecipeDetail(ingredients: List<ExtendedIngredient>): RecipeDetail {
+fun RecipeDetailEntity.toRecipeDetail(ingredients: List<ExtendedIngredient>): RecipeDetail {
     return RecipeDetail(
         id = mainId,
         title = title,

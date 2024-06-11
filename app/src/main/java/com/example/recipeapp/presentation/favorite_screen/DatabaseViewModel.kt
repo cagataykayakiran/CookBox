@@ -2,7 +2,7 @@ package com.example.recipeapp.presentation.favorite_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recipeapp.data.local.toRecipe
+import com.example.recipeapp.data.local.entity.toRecipe
 import com.example.recipeapp.domain.model.ExtendedIngredient
 import com.example.recipeapp.domain.model.RecipeDetail
 import com.example.recipeapp.domain.use_cases.GetLocalRecipes
