@@ -130,7 +130,9 @@ fun RecipeDetailScreen(
                 )
             }
             if (state.isLoading) {
-                AnimatedPreloader(modifier = Modifier.size(150.dp).align(Alignment.Center))
+                AnimatedPreloader(modifier = Modifier
+                    .size(150.dp)
+                    .align(Alignment.Center))
             }
         }
     }

@@ -25,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -69,6 +70,7 @@ fun FavoriteScreen(
                     Box(
                         modifier = Modifier
                             .size(200.dp, 200.dp)
+                            .shadow(10.dp)
                             .background(BackgroundPrimary)
                             .clickable {
                                 navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
@@ -77,7 +79,7 @@ fun FavoriteScreen(
                     ) {
                         Column(
                             modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Top,
+                            verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             AsyncImage(

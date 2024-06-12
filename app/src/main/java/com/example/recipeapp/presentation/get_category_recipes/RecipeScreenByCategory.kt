@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,9 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.AnimatedPreloader
 import com.example.recipeapp.presentation.components.CategoryListItem
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
-import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
-import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,12 +53,11 @@ fun RecipeScreenByCategory(
                 title = {
                     Text(
                         text = category,
-                        fontFamily = futuraSansFamily,
                         fontWeight = FontWeight.SemiBold
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MainColorSecondary
+                    containerColor = BackgroundPrimary
                 ),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
