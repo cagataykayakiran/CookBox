@@ -28,7 +28,6 @@ class SearchViewModel @Inject constructor(
             is SearchUiEvents.OnSearchQueryChanged -> {
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
-                    delay(2000)
                     search(event.query)
                 }
             }
@@ -52,6 +51,7 @@ class SearchViewModel @Inject constructor(
                     _searchScreenState.value = _searchScreenState.value.copy(
                         isLoading = true
                     )
+                    delay(2500)
                 }
 
                 is Resource.Error -> {

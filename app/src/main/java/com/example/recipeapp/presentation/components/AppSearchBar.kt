@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.example.recipeapp.util.Screen
 
@@ -31,17 +31,16 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 15.dp),
+            .padding(top = 15.dp)
+            .background(BackgroundPrimary),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = modifier
-                .size(300.dp, 50.dp)
-                .height(56.dp)
-                .border(1.dp, MainColorPrimary, shape = RoundedCornerShape(8.dp))
-                .background(Color.White, shape = RoundedCornerShape(8.dp))
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .border(1.dp, MainColorPrimary, shape = RoundedCornerShape(24.dp))
+                .height(55.dp)
+                .padding(10.dp)
                 .clickable { navController.navigate(Screen.SearchScreen.route) },
             contentAlignment = Alignment.CenterStart
         ) {
