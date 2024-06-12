@@ -20,7 +20,6 @@ import com.example.recipeapp.domain.model.RecipeDetail
 import com.example.recipeapp.presentation.components.BodyText
 import com.example.recipeapp.presentation.components.TitleText
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
-import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 
 @Composable
 fun IngredientSection(recipe: RecipeDetail) {
@@ -43,7 +42,7 @@ fun IngredientSection(recipe: RecipeDetail) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MainColorSecondary),
+                        .background(BackgroundPrimary),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {

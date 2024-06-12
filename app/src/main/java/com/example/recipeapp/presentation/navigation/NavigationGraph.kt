@@ -1,5 +1,7 @@
 package com.example.recipeapp.presentation.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,11 +18,12 @@ import com.example.recipeapp.presentation.search_screen.SearchScreen
 import com.example.recipeapp.util.ConnectivityObserver
 import com.example.recipeapp.util.Screen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph(
     modifier: Modifier = Modifier,
     viewModel: RecipeTypeViewModel = hiltViewModel(),
-    status: ConnectivityObserver.Status
+    status: ConnectivityObserver.Status,
 
 ) {
     val navController = rememberNavController()

@@ -1,7 +1,6 @@
 package com.example.recipeapp.work_manager
 
 import com.example.recipeapp.data.local.entity.toRecipe
-import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.domain.model.toRecipeEntity
 import com.example.recipeapp.domain.repository.RecipeRepository
 
@@ -10,10 +9,8 @@ class DataSyncRepository(
 ) {
 
     suspend fun syncData(): Int {
-        var localRecipes = emptyList<Recipe>()
-        repository.getLocalRecipes().collect { it ->
-            localRecipes = it.map { it.toRecipe() }
-        }
+        val localRecipes = repository.getLocalRecipes().map { it.toRecipe() }
+
         val lowCaloriesRecipes = repository.getRecipesByLowCalories()
         val lowReadyTimeRecipes = repository.getRecipesByLowReadyTime()
         val highCaloriesRecipes = repository.getRecipesByHighProtein()

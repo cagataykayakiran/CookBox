@@ -1,5 +1,7 @@
 package com.example.recipeapp.presentation.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
@@ -24,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.example.recipeapp.work_manager.MyViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(modifier: Modifier = Modifier, workerViewModel: MyViewModel = hiltViewModel()) {
@@ -46,36 +49,27 @@ fun AppTopBar(modifier: Modifier = Modifier, workerViewModel: MyViewModel = hilt
             containerColor = Color.White
         ),
         actions = {
-            BadgeInteractiveExample(dataState)
+            BadgeInteractive(dataState)
         }
     )
 }
 
 @Composable
-fun BadgeInteractiveExample(dataState: Int) {
-        BadgedBox(
-            modifier = Modifier.padding(end = 20.dp),
-            badge = {
-                if (dataState > 0 ) {
-                    Badge(
-                        containerColor = Color.White,
-                        contentColor = Color.Red
-                    ) {
-                        Text(text = "$dataState", fontSize = 14.sp)
-                    }
-                } else {
-                    Badge(
-                        containerColor = Color.White,
-                        contentColor = Color.Red
-                    ) {
-                        Text(text = "$dataState", fontSize = 14.sp)
-                    }
-                }
+fun BadgeInteractive(dataState: Int) {
+    BadgedBox(
+        modifier = Modifier.padding(end = 20.dp),
+        badge = {
+            Badge(
+                containerColor = Color.White,
+                contentColor = if (dataState == 0) Color.Black else Color.Red
+            ) {
+                Text(text = "$dataState", fontSize = 14.sp)
             }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Notifications,
-                contentDescription = "Shopping cart",
-            )
         }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Notifications,
+            contentDescription = "notification",
+        )
     }
+}

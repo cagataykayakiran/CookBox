@@ -1,23 +1,16 @@
 package com.example.recipeapp.presentation.search_screen
 
-import androidx.compose.foundation.clickable
+import SearchTextField
+import android.content.Context
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,13 +19,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.recipeapp.presentation.search_screen.component.SearchItem
+import com.example.recipeapp.presentation.components.AnimatedPreloader
+import com.example.recipeapp.presentation.components.NavigationIcon
+import com.example.recipeapp.presentation.search_screen.component.SearchHistoryBox
+import com.example.recipeapp.presentation.search_screen.component.SearchResult
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
-import com.example.recipeapp.util.Screen
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,58 +40,72 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    var text by remember { mutableStateOf("") }
-    var active by remember { mutableStateOf(false) }
+    var query by remember { mutableStateOf("") }
     val state by viewModel.searchScreenState.collectAsState()
+    var isSearching by remember { mutableStateOf(false) }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        SearchBar(
-            query = text,
-            onQueryChange = {
-                text = it
-                viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(it))
-            },
-            onSearch = {
-                active = false
-                viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(text))
-            },
-            active = active,
-            onActiveChange = { active = it },
-            placeholder = { Text(text = "Search") },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-            trailingIcon = {
-                if (active) Icon(
-                    modifier = Modifier.clickable {
-                        if (text.isNotEmpty()) text = "" else active = false
-                        viewModel.onEvent(SearchUiEvents.OnSearchedResetClick)
-                    },
-                    imageVector = Icons.Default.Close,
-                    contentDescription = null
-                )
-            },
-            colors = SearchBarDefaults.colors(
-                containerColor = BackgroundPrimary,
-                inputFieldColors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Black
-                )
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("history", Context.MODE_PRIVATE)
+
+
+    Scaffold(
+        modifier = Modifier.background(BackgroundPrimary).pointerInput(Unit) {
+        detectTapGestures(onTap = {
+            keyboardController?.hide()
+            focusRequester.freeFocus()
+        })
+    },
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Search") },
+                navigationIcon = { NavigationIcon(navController = navController) }
             )
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .focusRequester(focusRequester),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(15.dp),
-                modifier = Modifier.padding(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(15.dp),
-            ) {
-                items(state.data) { recipe ->
-                    SearchItem(recipe = recipe) {
-                        navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
-                    }
-                }
+            SearchTextField(
+                query = query,
+                onQueryChange = {
+                    viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(it))
+                    query = it
+                    isSearching = true
+                },
+                onDone = {
+                    viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(query))
+                    sharedPreferences.edit().putString(query, query).apply()
+                    focusRequester.freeFocus()
+                    keyboardController?.hide()
+                },
+                onReset = {
+                    query = ""
+                    viewModel.onEvent(SearchUiEvents.OnSearchedResetClick)
+                },
+                modifier = modifier,
+                focusRequester = focusRequester
+            )
+
+            if (state.isLoading) {
+                AnimatedPreloader()
+            }
+            val historyList = sharedPreferences.all.values.toList()
+
+            if (!isSearching || query.isEmpty()) {
+                SearchHistoryBox(historyList = historyList, onClick = { tag ->
+                    query = tag
+                    viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(query))
+                    focusRequester.requestFocus()
+                }, onClear = { sharedPreferences.edit().clear().apply() })
+            } else {
+                SearchResult(state.data, navController)
             }
         }
     }

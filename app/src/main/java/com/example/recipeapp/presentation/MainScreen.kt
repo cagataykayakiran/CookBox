@@ -1,5 +1,7 @@
 package com.example.recipeapp.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.AnimatedPreloader
@@ -33,9 +33,9 @@ import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewMode
 import com.example.recipeapp.presentation.get_recipes_high_protein.HighProteinSection
 import com.example.recipeapp.presentation.get_recipes_low_calories.LowCaloriesSection
 import com.example.recipeapp.presentation.get_recipes_low_ready_time.LowReadyTimeCategorySection
-import com.example.recipeapp.presentation.ui.theme.futuraSansFamily
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen(
     navController: NavController,

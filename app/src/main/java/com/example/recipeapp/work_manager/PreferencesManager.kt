@@ -10,7 +10,7 @@ class PreferencesManager(context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("worker", Context.MODE_PRIVATE)
 
-    private val _newRecipeCountFlow = MutableStateFlow(getNewRecipeCount())
+    private val _newRecipeCountFlow = MutableStateFlow(0)
     val newRecipeCountFlow: Flow<Int> = _newRecipeCountFlow.asStateFlow()
 
     init {
@@ -22,6 +22,6 @@ class PreferencesManager(context: Context) {
     }
 
     private fun getNewRecipeCount(): Int {
-        return sharedPreferences.getString("new_recipe_count", "0")?.toInt() ?: 0
+        return sharedPreferences.getInt("new_recipe_count", 0)
     }
 }

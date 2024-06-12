@@ -72,7 +72,7 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeDetailDao.getRecipeWithIngredientsById(recipeId)
     }
 
-    override suspend fun getLocalRecipes(): Flow<List<RecipeEntity>> {
+    override suspend fun getLocalRecipes(): List<RecipeEntity> {
         return recipeDao.getRecipes()
     }
 

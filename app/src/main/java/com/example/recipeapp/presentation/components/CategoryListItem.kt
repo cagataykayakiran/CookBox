@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
+import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.util.Screen
 
 @Composable
@@ -36,7 +36,7 @@ fun CategoryListItem(modifier: Modifier = Modifier, navController: NavController
             .padding(10.dp)
             .clip(RoundedCornerShape(15.dp))
             .size(400.dp, 150.dp)
-            .background(MainColorSecondary)
+            .background(BackgroundPrimary)
             .clickable {
                 navController.navigate(Screen.RecipeDetail.route + "/${recipe.id}")
             }
