@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
+import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 import com.example.recipeapp.util.Screen
 
 @Composable
@@ -31,8 +32,7 @@ fun AppSearchBar(navController: NavController, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 15.dp)
-            .background(BackgroundPrimary),
+            .padding(top = 15.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
