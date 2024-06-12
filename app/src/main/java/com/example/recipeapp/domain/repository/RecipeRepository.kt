@@ -28,7 +28,7 @@ interface RecipeRepository {
 
     suspend fun getRecipeWithIngredientsById(recipeId: Int): RecipeWithIngredients?
 
-    suspend fun getLocalRecipes(): Flow<List<RecipeEntity>>
+    suspend fun getLocalRecipes(): List<RecipeEntity>
 
     suspend fun insertRecipe(recipe: RecipeEntity)
 }

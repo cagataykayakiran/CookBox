@@ -21,11 +21,13 @@ class DataSyncWorker  @AssistedInject constructor(
             val newRecipes = dataSyncRepository.syncData()
             val sharedPreferences =
                 applicationContext.getSharedPreferences("worker", Context.MODE_PRIVATE)
-            sharedPreferences.edit().putString("new_recipe_count", newRecipes.toString()).apply()
-            println("DataSyncWorker $sharedPreferences")
+            sharedPreferences.edit().putInt("new_recipe_count", newRecipes).apply()
+            println("DataSyncWorker $newRecipes")
             Result.success()
         } catch (e: Exception) {
              Result.retry()
+        } catch (e: Exception) {
+            Result.failure()
         }
     }
 }
