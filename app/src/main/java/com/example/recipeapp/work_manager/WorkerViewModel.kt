@@ -44,7 +44,7 @@ class MyViewModel @Inject constructor(
             .build()
 
         val workRequest =
-            PeriodicWorkRequestBuilder<DataSyncWorker>(15, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<DataSyncWorker>(1, TimeUnit.HOURS)
                 .setBackoffCriteria(
                     backoffPolicy = BackoffPolicy.LINEAR,
                     duration = Duration.ofSeconds(15)

@@ -25,6 +25,6 @@ class DataSyncRepository(
                 repository.insertRecipe(recipe.toRecipeEntity())
             }
         }
-        return 1
+        return newRecipeCount
     }
 }
