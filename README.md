@@ -19,3 +19,12 @@ This project is a recipe application that contains various recipes and allows us
 
 ## Visuals
 
+
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_212912.png" alt="Visual 1" width="200">
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_213007.png" alt="Visual 2" width="200">
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_213024.png" alt="Visual 3" width="200">
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_213058.png" alt="Visual 4" width="200">
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_213111.png" alt="Visual 5" width="200">
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_213233.png" alt="Visual 6" width="200">
+<img src="https://github.com/cagataykayakiran/Papara-Final-Case/blob/main/Screen%20Shots/Screenshot_20240612_213322.png" alt="Visual 6" width="200">
+
