@@ -15,7 +15,6 @@ The application includes:
 - Kotlin <br>
 - Gradle <br>
 - Android Studio <br>
-- Google AI (Gemini) <br>
 - Jetpack Compose <br>
 - Retrofit2 <br>
 - Dagger <br>
