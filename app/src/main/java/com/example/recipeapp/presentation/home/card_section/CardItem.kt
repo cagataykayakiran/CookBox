@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_recipes_card
+package com.example.recipeapp.presentation.home.card_section
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,27 +24,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipeapp.domain.model.Recipe
-import com.example.recipeapp.presentation.components.onRecipeClick
-import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
 
 @Composable
-fun CardItem(recipe: Recipe, navController: NavController, detailViewModel: RecipeDetailViewModel) {
+fun CardItem(
+    recipe: Recipe,
+    onRecipeClick: (Recipe) -> Unit,
+) {
     Card(
         modifier = Modifier
             .size(370.dp, 150.dp)
             .fillMaxHeight()
-            .clickable {
-                onRecipeClick(
-                    recipe = recipe,
-                    navController = navController,
-                    viewModel = detailViewModel
-                )
-            },
+            .clickable { onRecipeClick(recipe) },
         colors = CardDefaults.cardColors(containerColor = MainColorSecondary),
         shape = RoundedCornerShape(25.dp)
     ) {

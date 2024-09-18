@@ -9,7 +9,7 @@ class GetLocalRecipes @Inject constructor(
     private val recipesRepository: RecipeRepository
 ) {
 
-    suspend operator fun invoke(): Flow<List<RecipeDetailEntity>> {
+    operator fun invoke(): Flow<List<RecipeDetailEntity>> {
         return recipesRepository.getLocalRecipeDetail()
     }
 }

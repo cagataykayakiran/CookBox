@@ -21,18 +21,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.AnimatedPreloader
-import com.example.recipeapp.presentation.get_recipes_card.CardSliderSection
 import com.example.recipeapp.presentation.components.AppBottomBar
 import com.example.recipeapp.presentation.components.AppSearchBar
 import com.example.recipeapp.presentation.components.AppTopBar
 import com.example.recipeapp.presentation.components.TitleText
-import com.example.recipeapp.presentation.get_category_recipes.CategorySection
-import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
-import com.example.recipeapp.presentation.get_recipes_high_protein.HighProteinSection
-import com.example.recipeapp.presentation.get_recipes_low_calories.LowCaloriesSection
-import com.example.recipeapp.presentation.get_recipes_low_ready_time.LowReadyTimeCategorySection
+import com.example.recipeapp.presentation.home.card_section.CardSection
+import com.example.recipeapp.presentation.home.card_section.CardSectionViewModel
+import com.example.recipeapp.presentation.home.category_section.categories.CategoriesCarouselViewModel
+import com.example.recipeapp.presentation.home.category_section.categories.CategorySection
+import com.example.recipeapp.presentation.home.category_section.high_protein.HighProteinSection
+import com.example.recipeapp.presentation.home.category_section.high_protein.HighProteinViewModel
+import com.example.recipeapp.presentation.home.category_section.low_calories.LowCaloriesSection
+import com.example.recipeapp.presentation.home.category_section.low_calories.LowCaloriesViewModel
+import com.example.recipeapp.presentation.home.category_section.low_ready_time.LowReadyTimeSection
+import com.example.recipeapp.presentation.home.category_section.low_ready_time.LowReadyTimeViewModel
+import com.example.recipeapp.util.Screen
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -40,7 +46,6 @@ import com.example.recipeapp.presentation.get_recipes_low_ready_time.LowReadyTim
 fun MainScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    detailViewModel: RecipeDetailViewModel = hiltViewModel(),
 ) {
     var showAnimation by remember { mutableStateOf(true) }
     LaunchedEffect(Unit) {
@@ -70,27 +75,73 @@ fun MainScreen(
                 }
                 item {
                     TitleText(text = "Popular", fontWeight = FontWeight.SemiBold)
-                    CardSliderSection(
-                        detailViewModel = detailViewModel,
-                        navController = navController
+                    val viewModel: CardSectionViewModel = hiltViewModel()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    val uiEffect = viewModel.uiEffect
+                    CardSection(
+                        uiState = uiState,
+                        uiEffect = uiEffect,
+                        onAction = viewModel::onAction,
+                        onNavigateDetail = { recipeId ->
+                            navController.navigate(Screen.RecipeDetail.route + "/$recipeId")
+                        },
                     )
                 }
                 item {
                     TitleText(text = "Categories", fontWeight = FontWeight.SemiBold)
                     Spacer(modifier = Modifier.height(8.dp))
-                    CategorySection(navController = navController)
+                    val viewModel: CategoriesCarouselViewModel = hiltViewModel()
+                    val uiEffect = viewModel.uiEffect
+                    val categories = viewModel.categories
+                    val images = viewModel.images
+                    CategorySection(
+                        uiEffect = uiEffect,
+                        onAction = viewModel::onAction,
+                        onNavigateRecipeList = { category ->
+                            navController.navigate(Screen.RecipeListScreenByCategory.route + "/$category")
+                        },
+                        categories = categories,
+                        images = images
+                    )
                 }
                 item {
                     TitleText(text = "Low Calories", fontWeight = FontWeight.SemiBold)
-                    LowCaloriesSection(navController = navController)
+                    val viewModel: LowCaloriesViewModel = hiltViewModel()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    val uiEffect = viewModel.uiEffect
+                    LowCaloriesSection(
+                        uiState = uiState,
+                        uiEffect = uiEffect,
+                        onAction = viewModel::onAction
+                    ) { recipeId ->
+                        navController.navigate(Screen.RecipeDetail.route + "/$recipeId")
+                    }
                 }
                 item {
                     TitleText(text = "Low Ready Time", fontWeight = FontWeight.SemiBold)
-                    LowReadyTimeCategorySection(navController = navController)
+                    val viewModel: LowReadyTimeViewModel = hiltViewModel()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    val uiEffect = viewModel.uiEffect
+                    LowReadyTimeSection(
+                        uiState = uiState,
+                        uiEffect = uiEffect,
+                        onAction = viewModel::onAction
+                    ) {
+                        navController.navigate(Screen.RecipeDetail.route + "/$it")
+                    }
                 }
                 item {
                     TitleText(text = "High Protein", fontWeight = FontWeight.SemiBold)
-                    HighProteinSection(navController = navController)
+                    val viewModel: HighProteinViewModel = hiltViewModel()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    val uiEffect = viewModel.uiEffect
+                    HighProteinSection(
+                        uiState = uiState,
+                        uiEffect = uiEffect,
+                        onAction = viewModel::onAction
+                    ) {
+                        navController.navigate(Screen.RecipeDetail.route + "/$it")
+                    }
                 }
             }
         }

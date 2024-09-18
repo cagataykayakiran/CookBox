@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_recipe_detail.components
+package com.example.recipeapp.presentation.recipe_detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

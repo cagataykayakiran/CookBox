@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_category_recipes
+package com.example.recipeapp.presentation.home.category_section.categories
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,8 +18,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -30,20 +28,21 @@ import com.example.recipeapp.presentation.components.AnimatedPreloader
 import com.example.recipeapp.presentation.components.CategoryListItem
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeScreenByCategory(
+fun CategoryRecipes(
+    uiState: RecipeTypeContract.UiState,
+    uiEffect: Flow<RecipeTypeContract.UiEffect>,
+    onAction: (RecipeTypeContract.UiAction) -> Unit,
     modifier: Modifier = Modifier,
     category: String,
-    viewModel: RecipeTypeViewModel,
     navController: NavController,
 ) {
 
-    val state by viewModel.typeByRecipeState.collectAsState()
-
     LaunchedEffect(category) {
-        viewModel.onEvent(UIEvent.SelectCategory(category))
+        onAction(RecipeTypeContract.UiAction.SelectCategory(category))
     }
 
     Scaffold(
@@ -77,13 +76,17 @@ fun RecipeScreenByCategory(
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(state.data) {
-                    CategoryListItem(navController = navController, recipe = it)
+                items(uiState.data) { recipe ->
+                    CategoryListItem(
+                        recipe = recipe,
+                        navController = navController
+                    )
                 }
             }
-            if(state.error.isNotBlank()) {
+
+            if (uiState.error.isNotBlank()) {
                 Text(
-                    text = state.error,
+                    text = uiState.error,
                     color = MaterialTheme.colorScheme.error,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -92,10 +95,12 @@ fun RecipeScreenByCategory(
                         .align(Alignment.Center)
                 )
             }
-            if(state.isLoading) {
+
+            if (uiState.isLoading) {
                 AnimatedPreloader(modifier = Modifier.align(Alignment.Center))
             }
         }
     }
 }
+
 

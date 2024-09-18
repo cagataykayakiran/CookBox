@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_category_recipes.components
+package com.example.recipeapp.presentation.home.category_section.categories.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,20 +24,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.recipeapp.presentation.components.BodyText
+import com.example.recipeapp.presentation.home.category_section.categories.RecipeTypeContract
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.presentation.ui.theme.MainColorSecondary
-import com.example.recipeapp.util.Screen
 
 @Composable
-fun CategoryList(
+fun CategoriesCarouselList(
     categories: List<String>,
     images: List<Int>,
-    navController: NavController,
+    onAction: (RecipeTypeContract.UiAction) -> Unit,
+    onCategoryClick: (Int) -> Unit,
 ) {
+    // Seçili kategori indexini hatırlıyoruz
     var selectedIndex by remember { mutableIntStateOf(-1) }
 
+    // Yatay bir liste oluşturuyoruz
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -49,7 +51,8 @@ fun CategoryList(
                 isSelected = index == selectedIndex,
                 onClick = {
                     selectedIndex = index
-                    navController.navigate(Screen.RecipeListScreenByCategory.route + "/${categories[index]}")
+                    onAction(RecipeTypeContract.UiAction.SelectCategory(categories[index]))  // Tıklanan kategori için action gönderiyoruz
+                    onCategoryClick(index)  // Tıklanan kategori index'ini geçiriyoruz
                 }
             )
         }

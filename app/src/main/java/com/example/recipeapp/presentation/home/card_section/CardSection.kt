@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_recipes_card
+package com.example.recipeapp.presentation.home.card_section
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,41 +8,60 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.recipeapp.presentation.get_recipe_detail.RecipeDetailViewModel
 import com.example.recipeapp.presentation.ui.theme.MainColorPrimary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.yield
+import com.example.recipeapp.presentation.home.card_section.CardContract.UiAction
+import com.example.recipeapp.presentation.home.card_section.CardContract.UiEffect
+import com.example.recipeapp.presentation.home.card_section.CardContract.UiState
+
+
+@Composable
+fun CardSection(
+    uiState: UiState,
+    uiEffect: Flow<UiEffect>,
+    onAction: (UiAction) -> Unit,
+    onNavigateDetail: (Int) -> Unit,
+) {
+    LaunchedEffect(Unit) {
+        uiEffect.collect { effect ->
+            when (effect) {
+                is UiEffect.GoToDetail -> onNavigateDetail(effect.recipeId)
+            }
+        }
+    }
+
+    CardSectionContent(uiState = uiState, onAction = onAction)
+}
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun CardSliderSection(
+fun CardSectionContent(
     modifier: Modifier = Modifier,
-    recipeCardViewModel: RecipeCardViewModel = hiltViewModel(),
-    detailViewModel: RecipeDetailViewModel,
-    navController: NavController
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
 ) {
-    val pagerState = rememberPagerState()
-    val cardItemState by recipeCardViewModel.recipesState.collectAsState()
 
-    if (cardItemState.data.isNotEmpty()) {
+    val pagerState = rememberPagerState()
+
+    if (uiState.data.isNotEmpty()) {
         LaunchedEffect(true) {
             while (true) {
                 yield()
                 delay(3000)
                 pagerState.animateScrollToPage(
-                    page = (pagerState.currentPage + 1) % cardItemState.data.size
+                    page = (pagerState.currentPage + 1) % uiState.data.size
                 )
             }
         }
@@ -52,18 +71,19 @@ fun CardSliderSection(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        if (cardItemState.data.isNotEmpty()) {
+        if (uiState.data.isNotEmpty()) {
             HorizontalPager(
-                count = cardItemState.data.size,
+                count = uiState.data.size,
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
             ) { page ->
                 CardItem(
-                    cardItemState.data[page],
-                    navController = navController,
-                    detailViewModel = detailViewModel
+                    uiState.data[page],
+                    onRecipeClick = { recipe ->
+                        onAction(UiAction.OnRecipeClick(recipe))
+                    }
                 )
             }
             HorizontalPagerIndicator(
@@ -76,9 +96,21 @@ fun CardSliderSection(
                 spacing = 8.dp,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-        } 
-        if (cardItemState.error.isNotEmpty()) {
-         Text(text = cardItemState.error)   
+        }
+        if (uiState.error.isNotEmpty()) {
+            Text(text = uiState.error)
         }
     }
+
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun CardSectionScreenPreview(
+    @PreviewParameter(CardSectionPreviewProvider::class) uiState: UiState
+) {
+    CardSectionContent(
+        uiState = uiState,
+        onAction = {}
+    )
 }

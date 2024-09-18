@@ -1,63 +1,105 @@
 package com.example.recipeapp.presentation.search_screen
 
-import SearchTextField
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.recipeapp.domain.model.Recipe
 import com.example.recipeapp.presentation.components.AnimatedPreloader
 import com.example.recipeapp.presentation.components.NavigationIcon
+import com.example.recipeapp.presentation.search_screen.SearchScreenContract.UiAction
+import com.example.recipeapp.presentation.search_screen.SearchScreenContract.UiState
+import com.example.recipeapp.presentation.search_screen.SearchScreenContract.UiEffect
 import com.example.recipeapp.presentation.search_screen.component.SearchHistoryBox
 import com.example.recipeapp.presentation.search_screen.component.SearchResult
+import com.example.recipeapp.presentation.search_screen.component.SearchTextField
 import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
+@Composable
+fun SearchScreen(
+    uiState: UiState,
+    uiEffect: Flow<UiEffect>,
+    onAction: (UiAction) -> Unit,
+    navController: NavController,
+    onNavigateDetail: (Int) -> Unit,
+) {
+
+    LaunchedEffect(Unit) {
+        uiEffect.collect { effect ->
+            when (effect) {
+                is UiEffect.GotoDetail -> {
+                    onNavigateDetail(effect.recipeId)
+                }
+            }
+        }
+    }
+
+    SearchScreenContent(
+        query = uiState.searchQuery,
+        isSearching = uiState.isSearching,
+        isLoading = uiState.isLoading,
+        onChangeQuery = { query -> onAction(UiAction.ChangeSearchQuery(query)) },
+        onChangeIsSearching = { isSearching -> onAction(UiAction.ChangeIsSearching(isSearching)) },
+        onResetQuery = { onAction(UiAction.OnSearchResetClick) },
+        onAction = onAction,
+        navController = navController,
+        recipeList = uiState.data,
+        searchHistory = uiState.searchHistory,
+        onClearHistory = { onAction(UiAction.ClearSearchHistory) },
+        saveHistory = { query -> onAction(UiAction.SaveSearchHistory(query)) }
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(
+private fun SearchScreenContent(
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = hiltViewModel(),
-    navController: NavController
+    onAction: (UiAction) -> Unit,
+    navController: NavController,
+    query: String,
+    isLoading: Boolean,
+    recipeList: List<Recipe>,
+    onChangeQuery: (String) -> Unit,
+    onChangeIsSearching: (Boolean) -> Unit,
+    onResetQuery: () -> Unit,
+    isSearching: Boolean,
+    onClearHistory: () -> Unit,
+    searchHistory: List<Any?>,
+    saveHistory: (String) -> Unit
 ) {
-    var query by remember { mutableStateOf("") }
-    val state by viewModel.searchScreenState.collectAsState()
-    var isSearching by remember { mutableStateOf(false) }
 
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val context = LocalContext.current
-    val sharedPreferences = context.getSharedPreferences("history", Context.MODE_PRIVATE)
-
-
     Scaffold(
-        modifier = Modifier.background(BackgroundPrimary).pointerInput(Unit) {
-        detectTapGestures(onTap = {
-            keyboardController?.hide()
-            focusRequester.freeFocus()
-        })
-    },
+        modifier = Modifier
+            .background(BackgroundPrimary)
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    keyboardController?.hide()
+                    focusRequester.freeFocus()
+                })
+            },
         topBar = {
             TopAppBar(
                 title = { Text(text = "Search") },
@@ -74,40 +116,55 @@ fun SearchScreen(
         ) {
             SearchTextField(
                 query = query,
-                onQueryChange = {
-                    viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(it))
-                    query = it
-                    isSearching = true
+                onQueryChange = { query ->
+                    onChangeQuery(query)
+                    onAction(UiAction.ChangeIsSearching(true))
+                    onAction(UiAction.OnSearchQueryChanged(query))
                 },
                 onDone = {
-                    viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(query))
-                    sharedPreferences.edit().putString(query, query).apply()
+                    onAction(UiAction.OnSearchQueryChanged(query))
+                    onAction(UiAction.SaveSearchHistory(query))
                     focusRequester.freeFocus()
                     keyboardController?.hide()
                 },
                 onReset = {
-                    query = ""
-                    viewModel.onEvent(SearchUiEvents.OnSearchedResetClick)
+                    onResetQuery()
+                    onAction(UiAction.UpdateSearchHistory)
                 },
                 modifier = modifier,
                 focusRequester = focusRequester
             )
 
-            if (state.isLoading) {
+            if (isLoading) {
                 AnimatedPreloader()
             }
-            val historyList = sharedPreferences.all.values.toList()
 
             if (!isSearching || query.isEmpty()) {
-                SearchHistoryBox(historyList = historyList, onClick = { tag ->
-                    query = tag
-                    viewModel.onEvent(SearchUiEvents.OnSearchQueryChanged(query))
-                    focusRequester.requestFocus()
-                }, onClear = { sharedPreferences.edit().clear().apply() })
+                SearchHistoryBox(
+                    historyList = searchHistory,
+                    onClick = { tag ->
+                        onChangeQuery(tag)
+                        onAction(UiAction.OnSearchQueryChanged(tag))
+                        focusRequester.requestFocus()
+                    },
+                    onClear = { onClearHistory() })
             } else {
-                SearchResult(state.data, navController)
+                SearchResult(recipeList, navController)
             }
         }
     }
 }
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun SearchScreenPreview(
+    @PreviewParameter(SearchScreenPreviewProvider::class) uiState: UiState,
+) {
+    SearchScreen(
+        uiState = uiState,
+        onAction = {},
+        navController = rememberNavController(),
+        onNavigateDetail = {},
+        uiEffect = emptyFlow()
+    )
+}

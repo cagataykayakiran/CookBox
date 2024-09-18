@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_recipe_detail.components
+package com.example.recipeapp.presentation.recipe_detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import be.digitalia.compose.htmlconverter.htmlToString
 import coil.compose.AsyncImage
@@ -28,10 +29,7 @@ fun IngredientSection(recipe: RecipeDetail) {
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
         TitleText(text = "Instructions")
-        BodyText(
-            text = remember(recipe.instructions) { htmlToString(recipe.instructions) },
-            maxLines = 2
-        )
+        Text(text = htmlToString(recipe.instructions), color = Color.Black)
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -43,12 +41,13 @@ fun IngredientSection(recipe: RecipeDetail) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(BackgroundPrimary),
-                    horizontalArrangement = Arrangement.Start,
+                    horizontalArrangement = Arrangement.spacedBy(15.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
                         modifier = Modifier
-                            .width(60.dp),
+                            .width(60.dp)
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
@@ -56,16 +55,14 @@ fun IngredientSection(recipe: RecipeDetail) {
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(BackgroundPrimary)
                         )
                     }
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 10.dp),
-                        verticalArrangement = Arrangement.spacedBy(5.dp)
+                            .padding(start = 10.dp)
                     ) {
-                        BodyText(text = ingredient.original, maxLines = 2)
+                        BodyText(text = ingredient.original)
                     }
                 }
             }

@@ -1,3 +1,5 @@
+package com.example.recipeapp.presentation.search_screen.component
+
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.get_recipe_detail.components
+package com.example.recipeapp.presentation.recipe_detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -63,7 +63,7 @@ fun InformationSection(modifier: Modifier = Modifier, recipe: RecipeDetail) {
             )
         }
         TitleText(text = "About")
-        BodyText(text = remember(recipe.summary) { htmlToString(recipe.summary) }, maxLines = 2)
+        Text(text = htmlToString(recipe.summary), color = Color.Black)
         TitleText(text = "Tags")
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp),

@@ -17,7 +17,7 @@ import com.example.recipeapp.util.Screen
 fun SearchResult(
     data: List<Recipe>,
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     LazyVerticalGrid(
