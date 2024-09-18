@@ -30,7 +30,11 @@ import com.example.recipeapp.presentation.ui.theme.BackgroundPrimary
 import com.example.recipeapp.util.Screen
 
 @Composable
-fun CategoryListItem(modifier: Modifier = Modifier, navController: NavController, recipe: Recipe) {
+fun CategoryListItem(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    recipe: Recipe
+) {
     Box(
         modifier = modifier
             .padding(10.dp)

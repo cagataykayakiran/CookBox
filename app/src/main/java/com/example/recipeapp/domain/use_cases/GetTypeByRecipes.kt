@@ -12,10 +12,10 @@ import javax.inject.Inject
 class GetTypeByRecipes@Inject constructor(
     private val repository: RecipeRepository,
 ) {
-    operator fun invoke(diet: String): Flow<Resource<List<Recipe>>> = flow {
+    operator fun invoke(category: String): Flow<Resource<List<Recipe>>> = flow {
         try {
             emit(Resource.Loading())
-            val recipes = repository.getTypeByRecipes(diet)
+            val recipes = repository.getTypeByRecipes(category)
             emit(Resource.Success(recipes))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error"))

@@ -31,8 +31,8 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeApi.getPopularRecipes().toRecipeList()
     }
 
-    override suspend fun getTypeByRecipes(diet: String): List<Recipe> {
-        return recipeApi.getDietTypeRecipeList(diet).toRecipeList()
+    override suspend fun getTypeByRecipes(category: String): List<Recipe> {
+        return recipeApi.getDietTypeRecipeList(category).toRecipeList()
     }
 
     override suspend fun getRecipesByLowCalories(): List<Recipe> {
@@ -51,7 +51,7 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeApi.getRecipesById(id).toRecipeDetail()
     }
 
-    override suspend fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>> {
+    override fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>> {
         return recipeDetailDao.getFavoriteRecipe()
     }
 

@@ -12,7 +12,7 @@ interface RecipeRepository {
 
     suspend fun getPopularRecipes(): List<Recipe>
 
-    suspend fun getTypeByRecipes(diet: String): List<Recipe>
+    suspend fun getTypeByRecipes(category: String): List<Recipe>
 
     suspend fun getRecipesByLowCalories(): List<Recipe>
 
@@ -22,7 +22,7 @@ interface RecipeRepository {
 
     suspend fun getRecipesById(id: Int): RecipeDetail
 
-    suspend fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>>
+    fun getLocalRecipeDetail(): Flow<List<RecipeDetailEntity>>
 
     suspend fun insertRecipeDetailWithIngredients(recipe: RecipeDetail, ingredients: List<ExtendedIngredient>, isFavorite: Boolean)
 
